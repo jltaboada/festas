@@ -48,16 +48,16 @@
       "id": "xov",
       "eventos": [
         { "tipo": "deporte", "titulo": { "gl": "Portas abertas Vólei Praia (maiores de 15 anos)", "es": "Puertas abiertas Vóley Playa (mayores de 15 años)" }, "hora": "18.30 – 20.00 h", "lugar": { "gl": "Campo Vólei Praia de Oira", "es": "Campo Vóley Playa de Oira" } },
-        { "tipo": "musica", "titulo": "M-Clan", "hora": "23.00 – 01.00 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón dos Remedios" } },
-        { "tipo": "musica", "titulo": "A Gramola · Sesión DJ’s", "hora": "01.30 – 03.30 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón dos Remedios" } }
+        { "tipo": "musica", "titulo": "M-Clan", "hora": "23.00 – 01.00 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón de los Remedios" } },
+        { "tipo": "musica", "titulo": "A Gramola · Sesión DJ’s", "hora": "01.30 – 03.30 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón de los Remedios" } }
       ]
     },
     {
       "id": "ven",
       "eventos": [
         { "tipo": "deporte", "titulo": { "gl": "Portas abertas Vólei Praia (6 a 14 anos)", "es": "Puertas abiertas Vóley Playa (6 a 14 años)" }, "hora": "18.30 – 20.00 h", "lugar": { "gl": "Campo Vólei Praia de Oira", "es": "Campo Vóley Playa de Oira" } },
-        { "tipo": "deporte", "titulo": "2.º Máster de Ourense de Futbolín", "hora": "19.00 h", "lugar": { "gl": "Cancha Central · Pavillón dos Remedios", "es": "Cancha Central · Pabellón dos Remedios" } },
-        { "tipo": "musica", "titulo": "Miguel Ríos", "hora": "23.00 – 01.00 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón dos Remedios" } },
+        { "tipo": "deporte", "titulo": "2.º Máster de Ourense de Futbolín", "hora": "19.00 h", "lugar": { "gl": "Cancha Central · Pavillón dos Remedios", "es": "Cancha Central · Pabellón de los Remedios" } },
+        { "tipo": "musica", "titulo": "Miguel Ríos", "hora": "23.00 – 01.00 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón de los Remedios" } },
         { "tipo": "musica", "titulo": "América", "hora": "01.00 – 03.30 h", "lugar": { "gl": "Praza de Concepción Arenal", "es": "Plaza de Concepción Arenal" } }
       ]
     },
@@ -65,13 +65,13 @@
       "id": "sab",
       "eventos": [
         { "tipo": "deporte", "titulo": "2.º Máster de Ourense de Futbolín", "hora": "09.00 – 01.00 h", "lugar": { "gl": "Pavillón Anexo dos Remedios", "es": "Pabellón Anexo dos Remedios" } },
-        { "tipo": "espectaculo", "titulo": "Breaking", "hora": "17.00 – 22.00 h", "lugar": { "gl": "Pistas exteriores · Pavillón dos Remedios", "es": "Pistas exteriores · Pabellón dos Remedios" } },
+        { "tipo": "espectaculo", "titulo": "Breaking", "hora": "17.00 – 22.00 h", "lugar": { "gl": "Pistas exteriores · Pavillón dos Remedios", "es": "Pistas exteriores · Pabellón de los Remedios" } },
         { "tipo": "infantil", "titulo": { "gl": "Festa das Cores", "es": "Fiesta de los Colores" }, "hora": "19.30 h", "lugar": { "gl": "Praza de Concepción Arenal", "es": "Plaza de Concepción Arenal" } },
         { "tipo": "infantil", "titulo": "Cantajuego", "hora": "20.30 h", "lugar": { "gl": "Praza de Concepción Arenal", "es": "Plaza de Concepción Arenal" } },
-        { "tipo": "musica", "titulo": "Dirty Suc", "hora": "22.30 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón dos Remedios" } },
-        { "tipo": "musica", "titulo": "Hard Gz", "hora": "23.45 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón dos Remedios" } },
+        { "tipo": "musica", "titulo": "Dirty Suc", "hora": "22.30 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón de los Remedios" } },
+        { "tipo": "musica", "titulo": "Hard Gz", "hora": "23.45 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón de los Remedios" } },
         { "tipo": "musica", "titulo": "Conductores Suicidas · Tributo a Sabina", "hora": "00.00 h", "lugar": { "gl": "Praza de Concepción Arenal", "es": "Plaza de Concepción Arenal" } },
-        { "tipo": "musica", "titulo": "A Gramola · Sesión DJ’s", "hora": "01.30 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón dos Remedios" } }
+        { "tipo": "musica", "titulo": "A Gramola · Sesión DJ’s", "hora": "01.30 h", "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón de los Remedios" } }
       ]
     },
     {
