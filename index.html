@@ -165,6 +165,59 @@
     color:var(--control-text);font-size:1.1rem;cursor:pointer;padding:6px;display:none}
   .clear-busca.show{display:block}
 
+  /* toggle "mostrar permanentes cada día" */
+  .opt-toggle{
+    display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;
+    background:var(--control-bg);border:1.5px solid var(--control-border);color:var(--control-text);
+    border-radius:14px;padding:9px 13px;font-size:.84rem;font-weight:600;line-height:1.2;
+  }
+  .opt-toggle input{position:absolute;opacity:0;width:0;height:0}
+  .opt-toggle .sw{
+    flex:0 0 auto;width:38px;height:22px;border-radius:999px;background:rgba(128,140,170,.4);
+    position:relative;transition:background .2s;
+  }
+  .opt-toggle .sw::after{
+    content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+    background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+  .opt-toggle input:checked + .sw{background:var(--turquesa)}
+  .opt-toggle input:checked + .sw::after{transform:translateX(16px)}
+  .opt-toggle .tx{flex:1}
+
+  /* navegación de días: puntos + flechas */
+  .dia-nav{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 4px 14px;flex-wrap:wrap}
+  .dia-dots{display:flex;gap:7px;align-items:center}
+  .dia-dot{
+    width:9px;height:9px;border-radius:50%;border:none;padding:0;cursor:pointer;
+    background:rgba(128,140,170,.45);transition:transform .2s,background .2s;
+  }
+  .dia-dot.on{background:var(--amarelo);transform:scale(1.35)}
+  .dia-nav .hint{font-size:.74rem;color:var(--footer-soft);width:100%;text-align:center;margin-top:2px}
+
+  /* zona deslizable */
+  #contido.swiping{touch-action:pan-y}
+  .slide-anim{animation:slideIn .28s ease}
+  @keyframes slideIn{from{opacity:.3}to{opacity:1}}
+  .slide-left{animation:slL .28s ease}
+  .slide-right{animation:slR .28s ease}
+  @keyframes slL{from{opacity:.2;transform:translateX(28px)}to{opacity:1;transform:none}}
+  @keyframes slR{from{opacity:.2;transform:translateX(-28px)}to{opacity:1;transform:none}}
+
+  /* flechas laterais (aproveitan os ocos en pantallas anchas) */
+  .dia-arrow{
+    display:none;position:fixed;top:50%;transform:translateY(-50%);z-index:70;
+    width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--card);color:var(--azul);box-shadow:var(--sombra);
+    font-size:1.5rem;align-items:center;justify-content:center;transition:transform .15s,opacity .2s;
+  }
+  .dia-arrow:active{transform:translateY(-50%) scale(.9)}
+  .dia-arrow.prev{left:max(14px, calc(50% - 600px))}
+  .dia-arrow.next{right:max(14px, calc(50% - 600px))}
+  .dia-arrow[disabled]{opacity:.25;pointer-events:none}
+  @media(min-width:900px){
+    .dia-arrow.show{display:inline-flex}
+  }
+
   main{max-width:680px;margin:0 auto;padding:20px 16px calc(48px + var(--safe-bot))}
   .seccion-titulo{display:flex;align-items:center;gap:10px;margin:6px 4px 16px;color:var(--titulo)}
   .seccion-titulo h2{font-size:1.3rem;letter-spacing:.3px}
@@ -355,6 +408,11 @@
         <input id="busca" type="search" inputmode="search" placeholder="Buscar evento ou lugar…" autocomplete="off">
         <button class="clear-busca" id="clearBusca" aria-label="Limpar busca">✕</button>
       </div>
+      <label class="opt-toggle" id="permToggleWrap">
+        <input type="checkbox" id="permToggle">
+        <span class="sw" aria-hidden="true"></span>
+        <span class="tx" id="permToggleTx"></span>
+      </label>
     </div>
   </div>
 
@@ -369,6 +427,9 @@
       <p class="creditos" id="footCreditos"></p>
     </div>
   </footer>
+
+  <button class="dia-arrow prev" id="arrowPrev" aria-label="Día anterior">‹</button>
+  <button class="dia-arrow next" id="arrowNext" aria-label="Día seguinte">›</button>
 </div>
 
 <button class="top-btn" id="topBtn" aria-label="Arriba">↑</button>
@@ -426,6 +487,8 @@ const I18N={
     cal_pie:'Google Calendar abre nunha pestana. O ficheiro .ics serve para Apple Calendar, Outlook e outras apps.',
     aria_pechar:'Pechar',
     net_offline:'📴 Sen conexión · vendo a versión gardada', net_online:'✅ Conexión recuperada', net_offline_short:'Sen conexión',
+    swipe_hint:'Desliza ou usa as frechas para cambiar de día',
+    perm_toggle:'Amosar as actividades de toda a festa en cada día',
     toast_fav_add:'Gardado en favoritos ⭐', toast_fav_del:'Eliminado dos favoritos',
     toast_cal:'Evento listo para o teu calendario 📅', toast_copy:'Copiado ao portapapeis 📋',
     toast_install:'Instalando a app… 🎉', toast_installed:'App instalada! Xa a tes na pantalla de inicio 📲',
@@ -461,6 +524,8 @@ const I18N={
     cal_pie:'Google Calendar se abre en una pestaña. El archivo .ics sirve para Apple Calendar, Outlook y otras apps.',
     aria_pechar:'Cerrar',
     net_offline:'📴 Sin conexión · viendo la versión guardada', net_online:'✅ Conexión recuperada', net_offline_short:'Sin conexión',
+    swipe_hint:'Desliza o usa las flechas para cambiar de día',
+    perm_toggle:'Mostrar las actividades de toda la fiesta en cada día',
     toast_fav_add:'Guardado en favoritos ⭐', toast_fav_del:'Eliminado de favoritos',
     toast_cal:'Evento listo para tu calendario 📅', toast_copy:'Copiado al portapapeles 📋',
     toast_install:'Instalando la app… 🎉', toast_installed:'¡App instalada! Ya la tienes en la pantalla de inicio 📲',
@@ -541,6 +606,10 @@ async function cargarEventos(){
 let FAVS=new Set();
 try{FAVS=new Set(JSON.parse(localStorage.getItem(LS_FAV)||'[]'));}catch(e){}
 function saveFavs(){try{localStorage.setItem(LS_FAV,JSON.stringify([...FAVS]));}catch(e){}}
+const DIA_ORDER=['mer','xov','ven','sab','dom'];
+const LS_PERM='festas26_permcada';
+let PERM_EN_DIA=false;
+try{PERM_EN_DIA=localStorage.getItem(LS_PERM)==='1';}catch(e){}
 const state={mode:'mer',q:''};
 
 /* ================= UTILS ================= */
@@ -591,7 +660,13 @@ function currentList(){
   }
   if(state.mode==='favoritos') return ALL_EVENTS.filter(e=>FAVS.has(e.id));
   if(state.mode==='permanente') return ALL_EVENTS.filter(e=>e.diaId==='permanente');
-  return ALL_EVENTS.filter(e=>e.diaId===state.mode);
+  // día concreto: opcionalmente engadir as permanentes ao final
+  const doDia=ALL_EVENTS.filter(e=>e.diaId===state.mode);
+  if(PERM_EN_DIA){
+    const perms=ALL_EVENTS.filter(e=>e.diaId==='permanente');
+    return doDia.concat(perms);
+  }
+  return doDia;
 }
 
 function render(){
@@ -612,9 +687,51 @@ function render(){
   } else {
     const d=DIA_INFO[state.mode];
     head=`<div class="seccion-titulo"><span class="em">🎉</span><h2>${tr(d.nome)}</h2><span class="liña"></span></div>
+          ${diaNavHTML()}
           <div class="dia-data">${tr(d.nome)}, ${d.num} ${T('de_mes')}<small>${list.length} ${T('actividades')}</small></div>`;
   }
   main.innerHTML=head+list.map(e=>eventoHTML(e,showDia)).join('');
+  actualizarFlechas();
+}
+
+/* puntos de navegación entre días */
+function diaNavHTML(){
+  const dots=DIA_ORDER.map(id=>{
+    const info=DIA_INFO[id];
+    const on=id===state.mode?' on':'';
+    return `<button class="dia-dot${on}" data-godia="${id}" aria-label="${tr(info.nome)} ${info.num}"></button>`;
+  }).join('');
+  return `<div class="dia-nav"><div class="dia-dots">${dots}</div><span class="hint">${T('swipe_hint')}</span></div>`;
+}
+
+function esDiaNavegable(){return DIA_ORDER.includes(state.mode) && !state.q.trim();}
+function irADia(id,dir){
+  if(!DIA_ORDER.includes(id)) return;
+  state.mode=id; sel.value=id;
+  busca.value='';state.q='';clearBusca.classList.remove('show');
+  render();
+  const cont=document.getElementById('contido');
+  cont.classList.remove('slide-left','slide-right','slide-anim');
+  void cont.offsetWidth; // reiniciar animación
+  cont.classList.add(dir==='next'?'slide-left':dir==='prev'?'slide-right':'slide-anim');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function diaVecino(paso){
+  const i=DIA_ORDER.indexOf(state.mode);
+  if(i<0) return null;
+  const j=i+paso;
+  if(j<0||j>=DIA_ORDER.length) return null;
+  return DIA_ORDER[j];
+}
+function actualizarFlechas(){
+  const prev=document.getElementById('arrowPrev'), next=document.getElementById('arrowNext');
+  if(!prev||!next) return;
+  const nav=esDiaNavegable();
+  prev.classList.toggle('show',nav); next.classList.toggle('show',nav);
+  if(nav){
+    prev.disabled = diaVecino(-1)===null;
+    next.disabled = diaVecino(1)===null;
+  }
 }
 
 /* ================= FAVORITOS ================= */
@@ -749,7 +866,11 @@ function applyTheme(th){
 
 /* ================= IDIOMA ================= */
 function buildSelect(){
-  const cur=state.mode;
+  let cur=state.mode;
+  // se as permanentes se mostran en cada día, ocultamos a súa sección do desplegable
+  if(PERM_EN_DIA && cur==='permanente'){cur='mer';state.mode='mer';}
+  const permGroup = PERM_EN_DIA ? '' :
+    `<optgroup label="${T('og_perm')}"><option value="permanente">${T('opt_perm')}</option></optgroup>`;
   sel.innerHTML=`
     <optgroup label="${T('og_eventos')}"><option value="favoritos">${T('opt_favoritos')}</option></optgroup>
     <optgroup label="${T('og_dia')}">
@@ -759,7 +880,7 @@ function buildSelect(){
       <option value="sab">${tr(DIA_INFO.sab.nome)} 20 ${T('de_mes')}</option>
       <option value="dom">${tr(DIA_INFO.dom.nome)} 21 ${T('de_mes')}</option>
     </optgroup>
-    <optgroup label="${T('og_perm')}"><option value="permanente">${T('opt_perm')}</option></optgroup>`;
+    ${permGroup}`;
   sel.value=cur;
   updateFavOption();
 }
@@ -796,6 +917,8 @@ function applyI18n(){
   setText('calDescargaTxt',T('cal_descarga'));
   setText('calPie',T('cal_pie'));
   setAttr('calClose','aria-label',T('aria_pechar'));
+  setText('permToggleTx',T('perm_toggle'));
+  const pt=document.getElementById('permToggle'); if(pt) pt.checked=PERM_EN_DIA;
   if(typeof actualizarRede==='function') actualizarRede();
   buildSelect();
   render();
@@ -833,14 +956,57 @@ sel.addEventListener('change',()=>{
   busca.value='';state.q='';clearBusca.classList.remove('show');
   render();window.scrollTo({top:0,behavior:'smooth'});
 });
+
+/* toggle: amosar permanentes en cada día */
+document.getElementById('permToggle').addEventListener('change',(e)=>{
+  PERM_EN_DIA=e.target.checked;
+  try{localStorage.setItem(LS_PERM,PERM_EN_DIA?'1':'0');}catch(err){}
+  buildSelect();
+  render();
+});
+
+/* flechas laterais (escritorio) */
+document.getElementById('arrowPrev').addEventListener('click',()=>{const d=diaVecino(-1);if(d)irADia(d,'prev');});
+document.getElementById('arrowNext').addEventListener('click',()=>{const d=diaVecino(1);if(d)irADia(d,'next');});
+
+/* teclado: frechas esquerda/dereita cambian de día */
+document.addEventListener('keydown',(e)=>{
+  if(!app.classList.contains('show')||!esDiaNavegable()) return;
+  if(document.getElementById('calModal').classList.contains('show')) return;
+  if(e.key==='ArrowRight'){const d=diaVecino(1);if(d)irADia(d,'next');}
+  else if(e.key==='ArrowLeft'){const d=diaVecino(-1);if(d)irADia(d,'prev');}
+});
 busca.addEventListener('input',()=>{state.q=busca.value;clearBusca.classList.toggle('show',!!busca.value);render();});
 clearBusca.addEventListener('click',()=>{busca.value='';state.q='';clearBusca.classList.remove('show');busca.focus();render();});
 
-document.getElementById('contido').addEventListener('click',e=>{
+const contido=document.getElementById('contido');
+contido.addEventListener('click',e=>{
   const fav=e.target.closest('[data-fav]'); if(fav){toggleFav(fav.dataset.fav);return;}
   const cal=e.target.closest('[data-cal]'); if(cal){abrirModalCal(cal.dataset.cal);return;}
   const sh=e.target.closest('[data-share]'); if(sh){compartir(sh.dataset.share);return;}
+  const dot=e.target.closest('[data-godia]');
+  if(dot){const id=dot.dataset.godia;if(id!==state.mode){const dir=DIA_ORDER.indexOf(id)>DIA_ORDER.indexOf(state.mode)?'next':'prev';irADia(id,dir);}return;}
 });
+
+/* ================= SWIPE TÁCTIL (cambiar de día) ================= */
+(function(){
+  let x0=null,y0=null,t0=0,tracking=false;
+  contido.addEventListener('touchstart',(e)=>{
+    if(!esDiaNavegable()||e.touches.length!==1){tracking=false;return;}
+    const t=e.touches[0]; x0=t.clientX; y0=t.clientY; t0=Date.now(); tracking=true;
+  },{passive:true});
+  contido.addEventListener('touchend',(e)=>{
+    if(!tracking||x0===null) return; tracking=false;
+    const t=e.changedTouches[0];
+    const dx=t.clientX-x0, dy=t.clientY-y0, dt=Date.now()-t0;
+    // xesto horizontal claro: rápido e máis horizontal que vertical
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.6 && dt<700){
+      if(dx<0){const d=diaVecino(1);if(d)irADia(d,'next');}
+      else{const d=diaVecino(-1);if(d)irADia(d,'prev');}
+    }
+    x0=y0=null;
+  },{passive:true});
+})();
 
 const topBtn=document.getElementById('topBtn');
 window.addEventListener('scroll',()=>{topBtn.classList.toggle('show',window.scrollY>500&&app.classList.contains('show'));});
@@ -885,7 +1051,10 @@ function aplicarHash(){
   const validas=['favoritos','permanente','mer','xov','ven','sab','dom'];
   if(!validas.includes(seccion)) return false;
   abrirPrograma();
-  sel.value=seccion;state.mode=seccion;state.q='';busca.value='';clearBusca.classList.remove('show');
+  let secc=seccion;
+  // se as permanentes se amosan en cada día, non existe a sección "permanente": redirixir a un día
+  if(secc==='permanente' && PERM_EN_DIA) secc='mer';
+  sel.value=secc;state.mode=secc;state.q='';busca.value='';clearBusca.classList.remove('show');
   render();
   if(evId){setTimeout(()=>{
     const el=document.querySelector('.evento[data-id="'+CSS.escape(evId)+'"]');
@@ -931,5 +1100,5 @@ window.addEventListener('online',()=>{actualizarRede();toast(T('net_online'));})
   actualizarRede();
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a091fdc56b142d40',t:'MTc4MTAyNzU1OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0921d8b1a04cbba',t:'MTc4MTAyODg2MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
