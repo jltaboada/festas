@@ -80,12 +80,11 @@
   .land-lang{
     position:absolute;top:calc(var(--safe-top) + 12px);right:14px;z-index:3;
   }
-  .land-lang button{
+  .land-share{
     cursor:pointer;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.10);
-    color:#fff;font-family:inherit;font-weight:800;font-size:.82rem;letter-spacing:.03em;
-    padding:8px 14px;border-radius:999px;transition:transform .15s;
+    color:#fff;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;transition:transform .15s;
   }
-  .land-lang button:active{transform:scale(.92)}
+  .land-share:active{transform:scale(.9)}
   .cartel{
     max-width:330px;width:80%;border-radius:18px;display:block;margin:0 auto 24px;
     box-shadow:0 18px 48px rgba(0,0,0,.5);border:3px solid rgba(255,255,255,.85);position:relative;z-index:2;
@@ -93,11 +92,6 @@
   #landing h1{font-size:1.5rem;line-height:1.05;color:var(--amarelo);position:relative;z-index:2;text-shadow:0 3px 0 var(--rosa),0 6px 14px rgba(0,0,0,.4)}
   #landing h1 .l1{display:block;font-size:1.5rem}
   #landing h1 .l2{display:block;color:var(--turquesa);font-size:2.8rem;text-shadow:0 2px 0 #06204c,0 4px 10px rgba(0,0,0,.4)}
-  .land-datas{
-    display:inline-block;margin-top:16px;background:var(--rosa-claro);color:var(--azul);
-    font-weight:800;font-size:1.02rem;padding:8px 22px;border-radius:999px;
-    box-shadow:0 4px 14px rgba(0,0,0,.25);position:relative;z-index:2;
-  }
   .btn-programa{
     margin-top:28px;position:relative;z-index:2;cursor:pointer;border:none;
     font-family:inherit;font-size:1.15rem;font-weight:800;color:var(--azul);
@@ -120,15 +114,13 @@
     color:transparent;font-size:1.25rem;font-weight:800;text-shadow:none;
   }
   .land-extra{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
-  .btn-instalar,.btn-compartir{
-    cursor:pointer;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.10);color:#fff;
+  .btn-instalar{
+    display:none;cursor:pointer;border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.10);color:#fff;
     font-family:inherit;font-size:.92rem;font-weight:700;padding:11px 22px;border-radius:999px;
     align-items:center;gap:8px;transition:transform .15s,background .15s;
   }
-  .btn-instalar{display:none}
   .btn-instalar.show{display:inline-flex}
-  .btn-compartir{display:inline-flex}
-  .btn-instalar:active,.btn-compartir:active{transform:scale(.96)}
+  .btn-instalar:active{transform:scale(.96)}
 
   /* ============ APP ============ */
   #app{display:none}
@@ -168,8 +160,21 @@
     border-radius:14px;padding:12px 38px 12px 14px;cursor:pointer;
   }
   select#sel option, select#sel optgroup{color:#1a2238;background:#fff}
-  .search-wrap{position:relative}
+  .busca-row{display:flex;gap:9px;align-items:stretch}
+  .search-wrap{position:relative;flex:1;min-width:0}
   .search-wrap .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.7;font-size:.95rem}
+  .filtro-btn{
+    position:relative;flex:0 0 auto;width:46px;cursor:pointer;border:1.5px solid var(--control-border);
+    background:var(--control-bg);color:var(--control-text);border-radius:14px;display:grid;place-items:center;transition:transform .15s;
+  }
+  .filtro-btn:active{transform:scale(.92)}
+  .filtro-btn.activo{background:var(--amarelo);color:var(--azul);border-color:var(--amarelo)}
+  .filtro-badge{
+    display:none;position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;
+    background:var(--rosa);color:#fff;font-size:.68rem;font-weight:800;border-radius:999px;
+    align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.3);
+  }
+  .filtro-badge.show{display:inline-flex}
   input#busca{
     width:100%;font-family:inherit;font-size:.95rem;color:var(--control-text);background:var(--control-bg);
     border:1.5px solid var(--control-border);border-radius:14px;padding:11px 38px 11px 36px;
@@ -198,17 +203,24 @@
   .opt-toggle input:checked + .sw::after{transform:translateX(16px)}
   .opt-toggle .tx{flex:1}
 
-  /* filtros por tipo */
-  .filtros{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .filtros::-webkit-scrollbar{display:none}
-  .filtro-chip{
-    flex:0 0 auto;cursor:pointer;border:1.5px solid var(--control-border);background:var(--control-bg);
-    color:var(--control-text);font-family:inherit;font-size:.8rem;font-weight:700;
-    padding:7px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;transition:all .15s;
+  /* lista de filtros dentro do modal */
+  .filtro-lista{display:flex;flex-direction:column;gap:8px;text-align:left;margin-bottom:18px}
+  .filtro-opt{
+    display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;
+    border:1.5px solid #e3e9f7;background:#f6f8ff;border-radius:14px;padding:12px 14px;transition:all .15s;
   }
-  .filtro-chip:active{transform:scale(.94)}
-  .filtro-chip.on{background:var(--amarelo);color:var(--azul);border-color:var(--amarelo)}
-  .filtro-chip[data-tipo="todos"].on{background:#fff;color:var(--azul);border-color:#fff}
+  [data-theme="dark"] .filtro-opt{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.04)}
+  .filtro-opt .emo{font-size:1.3rem;width:30px;text-align:center}
+  .filtro-opt .nm{flex:1;font-weight:700;color:var(--texto)}
+  .filtro-opt .ck{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid #c2ccdf;display:grid;place-items:center;
+    color:#fff;font-size:.85rem;transition:all .15s;
+  }
+  .filtro-opt input{position:absolute;opacity:0;width:0;height:0}
+  .filtro-opt input:checked + .ck{background:var(--turquesa);border-color:var(--turquesa)}
+  .filtro-opt input:not(:checked) + .ck{color:transparent}
+  .modal-btn.ghost{background:transparent;border-color:#cfd6e6;color:var(--texto)}
+  [data-theme="dark"] .modal-btn.ghost{border-color:rgba(255,255,255,.2)}
 
   /* navegación de días: puntos + flechas */
   .dia-nav{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 4px 14px;flex-wrap:wrap}
@@ -397,18 +409,18 @@
 <!-- ============ LANDING ============ -->
 <section id="landing">
   <div class="land-lang">
-    <button id="langBtnLand" aria-label="Cambiar idioma">ES</button>
+    <button id="btnCompartirApp" class="land-share" aria-label="Compartir a app">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><line x1="8.3" y1="13.4" x2="15.7" y2="17.6"/><line x1="15.7" y1="6.4" x2="8.3" y2="10.6"/></svg>
+    </button>
   </div>
   <img src="img/fireworks2.png" alt="" class="land-deco l" aria-hidden="true">
   <img src="img/fireworks2.png" alt="" class="land-deco r" aria-hidden="true">
   <img src="img/cartel.jpg" alt="Cartel das Festas de Ourense 2026" class="cartel">
   <h1><span class="l1" id="landH1a">Festas de</span><span class="l2" id="landH1b">Ourense 2026</span></h1>
-  <div class="land-datas" id="landDatas">🗓️ Do 17 ao 21 de xuño</div>
   <div class="land-count" id="landCount"></div>
   <button class="btn-programa" id="verPrograma">Ver programa →</button>
   <div class="land-extra">
     <button class="btn-instalar" id="btnInstalar">📲 Instalar a app</button>
-    <button class="btn-compartir" id="btnCompartirApp"></button>
   </div>
   <p class="land-nota" id="landNota"></p>
 </section>
@@ -433,12 +445,17 @@
       <div class="sel-wrap">
         <select id="sel" aria-label="Sección"></select>
       </div>
-      <div class="search-wrap">
-        <span class="ic">🔍</span>
-        <input id="busca" type="search" inputmode="search" placeholder="Buscar evento ou lugar…" autocomplete="off">
-        <button class="clear-busca" id="clearBusca" aria-label="Limpar busca">✕</button>
+      <div class="busca-row">
+        <div class="search-wrap">
+          <span class="ic">🔍</span>
+          <input id="busca" type="search" inputmode="search" placeholder="Buscar evento ou lugar…" autocomplete="off">
+          <button class="clear-busca" id="clearBusca" aria-label="Limpar busca">✕</button>
+        </div>
+        <button class="filtro-btn" id="filtroBtn" aria-label="Filtrar por tipo">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.5 10 19 14 21 14 12.5 22 3"/></svg>
+          <span class="filtro-badge" id="filtroBadge"></span>
+        </button>
       </div>
-      <div class="filtros" id="filtros"></div>
       <label class="opt-toggle" id="permToggleWrap">
         <input type="checkbox" id="permToggle">
         <span class="sw" aria-hidden="true"></span>
@@ -491,13 +508,26 @@
   </div>
 </div>
 
+<!-- ============ MODAL FILTROS ============ -->
+<div id="filtroModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="filtroModalTit">
+    <button class="modal-close" id="filtroClose" aria-label="Pechar">✕</button>
+    <div class="modal-ic">🏷️</div>
+    <h3 class="modal-h" id="filtroModalTit"></h3>
+    <div class="filtro-lista" id="filtroLista"></div>
+    <div class="modal-acciones">
+      <button id="filtroLimpar" class="modal-btn ghost"></button>
+      <button id="filtroAplicar" class="modal-btn ics"></button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ================= I18N ================= */
 const I18N={
   gl:{
     badge_no_oficial:'App non oficial · Programa oficial',
     land_h1a:'Festas de', land_h1b:'Ourense 2026',
-    land_datas:'🗓️ Do 17 ao 21 de xuño',
     ver_programa:'Ver programa →',
     instalar:'📲 Instalar a app',
     land_nota:'Proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">Jose Luis Taboada</a> · non oficial.<br>Programa oficial en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal (PDF) ↗</a>',
@@ -520,7 +550,8 @@ const I18N={
     net_offline:'📴 Sen conexión · vendo a versión gardada', net_online:'✅ Conexión recuperada', net_offline_short:'Sen conexión',
     swipe_hint:'Desliza ou usa as frechas para cambiar de día',
     perm_toggle:'Amosar as actividades permanentes en cada día',
-    filtro_todos:'Todos', filtro_vacio_h:'Nada deste tipo', filtro_vacio_p:'Non hai eventos deste tipo nesta sección. Proba con outro filtro.',
+    filtro_vacio_h:'Nada que amosar', filtro_vacio_p:'Non hai eventos dos tipos seleccionados nesta sección. Proba a cambiar os filtros.',
+    filtro_abrir:'Filtrar por tipo', filtro_modal_tit:'Filtrar por tipo', filtro_limpar:'Limpar', filtro_aplicar:'Aplicar',
     count_falta:'Falta', count_faltan:'Faltan', count_dias:'días', count_dia:'día', count_hoxe:'É hoxe!', count_festa:'🎉 Felices festas!',
     compartir_app:'↗ Compartir a app', share_app_text:'Programa das Festas de Ourense 2026 (17–21 xuño). Toda a programación no móbil:',
     toast_fav_add:'Gardado en favoritos ⭐', toast_fav_del:'Eliminado dos favoritos',
@@ -537,7 +568,6 @@ const I18N={
   es:{
     badge_no_oficial:'App no oficial · Programa oficial',
     land_h1a:'Fiestas de', land_h1b:'Ourense 2026',
-    land_datas:'🗓️ Del 17 al 21 de junio',
     ver_programa:'Ver programa →',
     instalar:'📲 Instalar la app',
     land_nota:'Proyecto personal de <a href="https://jltaboada.com" target="_blank" rel="noopener">Jose Luis Taboada</a> · no oficial.<br>Programa oficial en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal (PDF) ↗</a>',
@@ -560,7 +590,8 @@ const I18N={
     net_offline:'📴 Sin conexión · viendo la versión guardada', net_online:'✅ Conexión recuperada', net_offline_short:'Sin conexión',
     swipe_hint:'Desliza o usa las flechas para cambiar de día',
     perm_toggle:'Mostrar las actividades permanentes en cada día',
-    filtro_todos:'Todos', filtro_vacio_h:'Nada de este tipo', filtro_vacio_p:'No hay eventos de este tipo en esta sección. Prueba con otro filtro.',
+    filtro_vacio_h:'Nada que mostrar', filtro_vacio_p:'No hay eventos de los tipos seleccionados en esta sección. Prueba a cambiar los filtros.',
+    filtro_abrir:'Filtrar por tipo', filtro_modal_tit:'Filtrar por tipo', filtro_limpar:'Limpiar', filtro_aplicar:'Aplicar',
     count_falta:'Falta', count_faltan:'Faltan', count_dias:'días', count_dia:'día', count_hoxe:'¡Es hoy!', count_festa:'🎉 ¡Felices fiestas!',
     compartir_app:'↗ Compartir la app', share_app_text:'Programa de las Fiestas de Ourense 2026 (17–21 junio). Toda la programación en el móvil:',
     toast_fav_add:'Guardado en favoritos ⭐', toast_fav_del:'Eliminado de favoritos',
@@ -647,7 +678,7 @@ const DIA_ORDER=['mer','xov','ven','sab','dom'];
 const LS_PERM='festas26_permcada';
 let PERM_EN_DIA=false;
 try{PERM_EN_DIA=localStorage.getItem(LS_PERM)==='1';}catch(e){}
-const state={mode:'mer',q:'',tipo:'todos'};
+const state={mode:'mer',q:'',tipos:new Set()}; // tipos baleiro = amosar todos
 
 /* ================= UTILS ================= */
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
@@ -707,7 +738,7 @@ function baseList(){
   return listaDoDia(state.mode);
 }
 function aplicarTipo(list){
-  if(state.tipo && state.tipo!=='todos') return list.filter(e=>e.tipo===state.tipo);
+  if(state.tipos && state.tipos.size) return list.filter(e=>state.tipos.has(e.tipo));
   return list;
 }
 function currentList(){return aplicarTipo(baseList());}
@@ -780,22 +811,17 @@ function render(){
   actualizarFlechas();
 }
 
-/* chips de filtro por tipo (segundo os tipos presentes na vista) */
+/* estado do botón de filtro (icono + contador) */
 function buildFiltros(){
-  const cont=document.getElementById('filtros'); if(!cont) return;
-  const tipos=tiposNaVista();
-  // se a vista non ten variedade (0-1 tipos), non amosamos filtros
-  if(tipos.length<2){
-    cont.style.display='none'; cont.innerHTML='';
-    if(state.tipo!=='todos'){state.tipo='todos';}
-    return;
-  }
-  cont.style.display='flex';
-  // se o tipo activo xa non está na vista, resetear
-  if(state.tipo!=='todos' && !tipos.includes(state.tipo)) state.tipo='todos';
-  let html=`<button class="filtro-chip${state.tipo==='todos'?' on':''}" data-tipo="todos">✨ ${T('filtro_todos')}</button>`;
-  html+=tipos.map(t=>`<button class="filtro-chip${state.tipo===t?' on':''}" data-tipo="${t}">${TIPOS[t].ic} ${tr(TIPOS[t].tag)}</button>`).join('');
-  cont.innerHTML=html;
+  const btn=document.getElementById('filtroBtn'), badge=document.getElementById('filtroBadge');
+  if(!btn||!badge) return;
+  // o filtro só se amosa nas vistas con variedade de tipos (días e permanentes)
+  const dispo=tiposNaVista().length>=2;
+  btn.style.display=dispo?'grid':'none';
+  const n=state.tipos.size;
+  btn.classList.toggle('activo',n>0);
+  badge.classList.toggle('show',n>0);
+  badge.textContent=n>0?n:'';
 }
 
 /* puntos de navegación entre días */
@@ -832,7 +858,7 @@ function irADia(id,dir){
   cambiarDiaInstantaneo(id);
 }
 function cambiarDiaInstantaneo(id){
-  state.mode=id; sel.value=id; state.tipo='todos';
+  state.mode=id; sel.value=id;
   busca.value='';state.q='';clearBusca.classList.remove('show');
   render();
   // levar arriba o scroll vertical (sen scroll horizontal ningún)
@@ -1015,22 +1041,19 @@ function applyI18n(){
   document.querySelector('meta[property="og:locale"]').setAttribute('content',LANG==='gl'?'gl_ES':'es_ES');
   // landing
   setText('landH1a',T('land_h1a')); setText('landH1b',T('land_h1b'));
-  setText('landDatas',T('land_datas'));
   setText('verPrograma',T('ver_programa'));
   setText('btnInstalar',T('instalar'));
-  setText('btnCompartirApp',T('compartir_app'));
+  setAttr('btnCompartirApp','aria-label',T('compartir_app'));
   setHtml('landNota',T('land_nota'));
   if(typeof actualizarContaAtras==='function') actualizarContaAtras();
   // topbar
   setText('brand',T('brand')); setText('brandSub',T('brand_sub'));
   setAttr('langBtn','aria-label',T('aria_idioma')); setAttr('themeBtn','aria-label',T('aria_tema'));
-  setAttr('langBtnLand','aria-label',T('aria_idioma'));
   setAttr('homeBtn','aria-label',T('aria_inicio')); setAttr('topBtn','aria-label',T('aria_arriba'));
   setAttr('sel','aria-label',T('aria_seccion')); setAttr('clearBusca','aria-label',T('aria_limpar'));
-  // os botóns de idioma amosan a outra lingua á que se cambia
-  const outro = LANG==='gl'?'ES':'GL';
-  document.getElementById('langBtn').textContent = outro;
-  document.getElementById('langBtnLand').textContent = outro;
+  // o botón de idioma amosa a outra lingua á que se cambia
+  document.getElementById('langBtn').textContent = LANG==='gl'?'ES':'GL';
+  setAttr('filtroBtn','aria-label',T('filtro_abrir'));
   document.getElementById('busca').setAttribute('placeholder',T('buscar_ph'));
   // footer
   setHtml('footTitulo',T('foot_titulo')); setHtml('footOficial',T('foot_oficial'));
@@ -1041,6 +1064,11 @@ function applyI18n(){
   setText('calDescargaTxt',T('cal_descarga'));
   setText('calPie',T('cal_pie'));
   setAttr('calClose','aria-label',T('aria_pechar'));
+  // modal filtros
+  setText('filtroModalTit',T('filtro_modal_tit'));
+  setText('filtroLimpar',T('filtro_limpar'));
+  setText('filtroAplicar',T('filtro_aplicar'));
+  setAttr('filtroClose','aria-label',T('aria_pechar'));
   setText('permToggleTx',T('perm_toggle'));
   const pt=document.getElementById('permToggle'); if(pt) pt.checked=PERM_EN_DIA;
   if(typeof actualizarRede==='function') actualizarRede();
@@ -1065,7 +1093,6 @@ document.getElementById('homeBtn').addEventListener('click',volverCartel);
 
 function toggleLang(){setLang(LANG==='gl'?'es':'gl');}
 document.getElementById('langBtn').addEventListener('click',toggleLang);
-document.getElementById('langBtnLand').addEventListener('click',toggleLang);
 document.getElementById('themeBtn').addEventListener('click',()=>{applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');});
 
 /* modal calendario */
@@ -1073,10 +1100,10 @@ document.getElementById('calClose').addEventListener('click',pecharModalCal);
 document.getElementById('calModal').addEventListener('click',(e)=>{if(e.target.id==='calModal')pecharModalCal();});
 document.getElementById('calGoogle').addEventListener('click',()=>{toast(T('toast_cal'));setTimeout(pecharModalCal,300);});
 document.getElementById('calDescarga').addEventListener('click',()=>{if(calEvActual&&calDtsActual){descargarICSEvento(calEvActual,calDtsActual);pecharModalCal();}});
-document.addEventListener('keydown',(e)=>{if(e.key==='Escape')pecharModalCal();});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape'){pecharModalCal();pecharModalFiltro();}});
 
 sel.addEventListener('change',()=>{
-  state.mode=sel.value;state.tipo='todos';
+  state.mode=sel.value;state.tipos.clear();
   busca.value='';state.q='';clearBusca.classList.remove('show');
   render();window.scrollTo({top:0,behavior:'smooth'});
 });
@@ -1089,10 +1116,40 @@ document.getElementById('permToggle').addEventListener('change',(e)=>{
   render();
 });
 
-/* filtros por tipo */
-document.getElementById('filtros').addEventListener('click',(e)=>{
-  const chip=e.target.closest('[data-tipo]'); if(!chip) return;
-  state.tipo=chip.dataset.tipo;
+/* ===== MODAL DE FILTROS ===== */
+let filtroTemp=new Set();
+function abrirModalFiltro(){
+  const tipos=tiposNaVista();
+  filtroTemp=new Set([...state.tipos].filter(t=>tipos.includes(t)));
+  const cont=document.getElementById('filtroLista');
+  cont.innerHTML=tipos.map(t=>`
+    <label class="filtro-opt">
+      <input type="checkbox" data-ft="${t}" ${filtroTemp.has(t)?'checked':''}>
+      <span class="emo">${TIPOS[t].ic}</span>
+      <span class="nm">${tr(TIPOS[t].tag)}</span>
+      <span class="ck">✓</span>
+    </label>`).join('');
+  document.getElementById('filtroModal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function pecharModalFiltro(){
+  document.getElementById('filtroModal').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.getElementById('filtroBtn').addEventListener('click',abrirModalFiltro);
+document.getElementById('filtroClose').addEventListener('click',pecharModalFiltro);
+document.getElementById('filtroModal').addEventListener('click',(e)=>{if(e.target.id==='filtroModal')pecharModalFiltro();});
+document.getElementById('filtroLista').addEventListener('change',(e)=>{
+  const cb=e.target.closest('[data-ft]'); if(!cb) return;
+  if(cb.checked) filtroTemp.add(cb.dataset.ft); else filtroTemp.delete(cb.dataset.ft);
+});
+document.getElementById('filtroLimpar').addEventListener('click',()=>{
+  filtroTemp.clear();
+  document.querySelectorAll('#filtroLista input[data-ft]').forEach(c=>c.checked=false);
+});
+document.getElementById('filtroAplicar').addEventListener('click',()=>{
+  state.tipos=new Set(filtroTemp);
+  pecharModalFiltro();
   render();
 });
 
@@ -1104,6 +1161,7 @@ document.getElementById('arrowNext').addEventListener('click',()=>{const d=diaVe
 document.addEventListener('keydown',(e)=>{
   if(!app.classList.contains('show')||!esDiaNavegable()) return;
   if(document.getElementById('calModal').classList.contains('show')) return;
+  if(document.getElementById('filtroModal').classList.contains('show')) return;
   if(e.key==='ArrowRight'){const d=diaVecino(1);if(d)irADia(d,'next');}
   else if(e.key==='ArrowLeft'){const d=diaVecino(-1);if(d)irADia(d,'prev');}
 });
@@ -1320,5 +1378,5 @@ document.getElementById('btnCompartirApp').addEventListener('click',compartirApp
   actualizarRede();
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a09244516fee1527',t:'MTc4MTAzMDQ0OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
