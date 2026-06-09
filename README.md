@@ -29,6 +29,11 @@
   En escritorio hay **flechas laterales** y también funciona con las teclas ← →. Puntos indicadores del día actual.
 - ✅ **Opción "mostrar permanentes en cada día":** una casilla añade las actividades de toda la fiesta
   al final de cada día (y oculta la sección "Actividades permanentes" del desplegable). Se recuerda en el dispositivo.
+- 🏷️ **Filtro por tipo** (música, espectáculo, deporte, infantil…): chips que aparecen solo cuando hay variedad
+  en la vista actual.
+- ⏳ **Cuenta atrás** en la portada ("Faltan X días") que se convierte en "¡Felices fiestas!" durante los días.
+- 📍 **Salto automático al día de hoy**: si abres la app durante las fiestas, arranca directamente en el día actual.
+- 📣 **Compartir la app** desde la portada (Web Share API / copia al portapapeles).
 
 ## 🚀 Publicar en GitHub Pages
 
