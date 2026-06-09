@@ -25,6 +25,10 @@
 - 🔄 **Auto-actualización:** el *service worker* usa una **marca de versión**; al cambiarla la app
   detecta la nueva versión, la instala y se recarga sola con el contenido más reciente.
 - 🔘 Acciones de cada evento como **iconos** (calendario, mapa, compartir) a todo el ancho.
+- 👆 **Cambio de día con gestos:** desliza el dedo (izquierda/derecha) para ir al día siguiente/anterior.
+  En escritorio hay **flechas laterales** y también funciona con las teclas ← →. Puntos indicadores del día actual.
+- ✅ **Opción "mostrar permanentes en cada día":** una casilla añade las actividades de toda la fiesta
+  al final de cada día (y oculta la sección "Actividades permanentes" del desplegable). Se recuerda en el dispositivo.
 
 ## 🚀 Publicar en GitHub Pages
 
