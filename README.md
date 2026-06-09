@@ -19,6 +19,10 @@
 - ↗️ **Compartir evento** con la Web Share API (y copia al portapapeles como alternativa) + enlace directo (`#dia/evento`).
 - 🔍 **Buscador** por nombre, lugar o tipo (ignora acentos).
 - 🌙☀️ **Modo claro/oscuro** con preferencia recordada.
+- 🌍 **Bilingüe galego/castelán** con selector de idioma (recuerda la preferencia).
+- 🔄 **Auto-actualización:** el *service worker* usa una **marca de versión**; al cambiarla la app
+  detecta la nueva versión, la instala y se recarga sola con el contenido más reciente.
+- 🔘 Acciones de cada evento como **iconos** (calendario, mapa, compartir) a todo el ancho.
 
 ## 🚀 Publicar en GitHub Pages
 
@@ -53,8 +57,12 @@
 ## ✏️ Editar el programa
 
 Los datos están en el bloque `<script>` de `index.html` (arrays `PERMANENTES` y `DIAS`).
-Si modificas archivos, **sube la versión de la caché** cambiando `CACHE` en `sw.js`
-(p. ej. `...-v1` → `...-v2`) para que los usuarios reciban la actualización.
+**Importante:** cada vez que cambies cualquier archivo, edita la constante **`VERSION`** al
+principio de `sw.js` (p. ej. `'2026-06-09-3'` → `'2026-06-09-4'`). Eso basta para que la app
+detecte la actualización, la descargue y se recargue sola en los dispositivos de los usuarios.
+
+> _(Nota técnica: los textos están traducidos en el objeto `I18N` y los datos bilingües del
+> programa usan `{gl:'…', es:'…'}` dentro de los arrays.)_
 
 ---
 Imágenes e iconos derivados del PDF del programa oficial. Datos sujetos a posibles cambios.

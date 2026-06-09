@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Festas de Ourense 2026 · Programa</title>
-<meta name="description" content="Programa das Festas de Ourense 2026 · do 17 ao 21 de xuño. Concertos, espectáculos, atraccións e actividades día a día. Garda favoritos, engade ao calendario e abre as localizacións no mapa. Proxecto persoal de jltaboada.">
+<meta name="description" content="Programa das Festas de Ourense 2026 · do 17 ao 21 de xuño. Concertos, espectáculos, atraccións e actividades día a día. Garda favoritos, engade ao calendario e abre as localizacións no mapa. Galego e castelán. Proxecto persoal de jltaboada.">
 <meta name="theme-color" content="#0a2a5e">
 <meta name="author" content="jltaboada">
 
@@ -33,44 +33,25 @@
     --radio:20px;
     --safe-top:env(safe-area-inset-top,0px);
     --safe-bot:env(safe-area-inset-bottom,0px);
-    /* tema escuro (por defecto) */
     --bg:radial-gradient(circle at 12% 8%, rgba(55,201,184,.18), transparent 38%),
          radial-gradient(circle at 88% 4%, rgba(242,95,166,.20), transparent 40%),
          radial-gradient(circle at 50% 100%, rgba(255,210,51,.12), transparent 45%),
          linear-gradient(180deg,#06204c 0%,#0a2a5e 35%,#10408a 100%);
-    --titulo:#ffffff;
-    --sub:#dfe9ff;
-    --footer:#cdd9f5;
-    --footer-soft:#9fb3dd;
-    --card:#ffffff;
-    --texto:#1a2238;
-    --topbar-bg:rgba(6,28,68,.94);
-    --topbar-border:rgba(255,255,255,.12);
-    --topbar-text:#eaf1ff;
-    --control-bg:rgba(255,255,255,.10);
-    --control-text:#ffffff;
-    --control-border:rgba(255,255,255,.18);
-    --detalle:#445;
-    --sombra:0 8px 24px rgba(8,24,60,.16);
+    --titulo:#ffffff; --sub:#dfe9ff; --footer:#cdd9f5; --footer-soft:#9fb3dd;
+    --card:#ffffff; --texto:#1a2238;
+    --topbar-bg:rgba(6,28,68,.94); --topbar-border:rgba(255,255,255,.12); --topbar-text:#eaf1ff;
+    --control-bg:rgba(255,255,255,.10); --control-text:#ffffff; --control-border:rgba(255,255,255,.18);
+    --detalle:#445; --sombra:0 8px 24px rgba(8,24,60,.16);
   }
   [data-theme="light"]{
     --bg:radial-gradient(circle at 12% 8%, rgba(55,201,184,.16), transparent 40%),
          radial-gradient(circle at 88% 4%, rgba(242,95,166,.16), transparent 42%),
          linear-gradient(180deg,#eef4ff 0%,#dfeaff 55%,#d2e2ff 100%);
-    --titulo:#0a2a5e;
-    --sub:#33507f;
-    --footer:#33507f;
-    --footer-soft:#6378a6;
-    --card:#ffffff;
-    --texto:#1a2238;
-    --topbar-bg:rgba(255,255,255,.92);
-    --topbar-border:rgba(10,42,94,.12);
-    --topbar-text:#0a2a5e;
-    --control-bg:rgba(10,42,94,.06);
-    --control-text:#0a2a5e;
-    --control-border:rgba(10,42,94,.16);
-    --detalle:#566;
-    --sombra:0 8px 22px rgba(8,24,60,.12);
+    --titulo:#0a2a5e; --sub:#33507f; --footer:#33507f; --footer-soft:#6378a6;
+    --card:#ffffff; --texto:#1a2238;
+    --topbar-bg:rgba(255,255,255,.92); --topbar-border:rgba(10,42,94,.12); --topbar-text:#0a2a5e;
+    --control-bg:rgba(10,42,94,.06); --control-text:#0a2a5e; --control-border:rgba(10,42,94,.16);
+    --detalle:#566; --sombra:0 8px 22px rgba(8,24,60,.12);
   }
 
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -78,11 +59,10 @@
   body{
     font-family:'Trebuchet MS','Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
     color:var(--texto);background:var(--bg);background-attachment:fixed;
-    min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5;
-    transition:background .3s;
+    min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5;transition:background .3s;
   }
 
-  /* ================= LANDING (CARTEL) ================= */
+  /* ============ LANDING ============ */
   #landing{
     position:fixed;inset:0;z-index:200;overflow-y:auto;
     background:
@@ -97,6 +77,14 @@
   .land-deco{position:absolute;width:150px;opacity:.5;pointer-events:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35))}
   .land-deco.l{top:6px;left:-44px;transform:rotate(-8deg)}
   .land-deco.r{bottom:30px;right:-46px;transform:scaleX(-1) rotate(-6deg);width:130px}
+  .land-lang{
+    position:absolute;top:calc(var(--safe-top) + 12px);right:14px;z-index:3;display:flex;gap:8px;
+  }
+  .land-lang button{
+    cursor:pointer;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.10);
+    color:#fff;font-family:inherit;font-weight:800;font-size:.8rem;padding:7px 12px;border-radius:999px;transition:transform .15s;
+  }
+  .land-lang button:active{transform:scale(.92)}
   .badge-no-oficial{
     display:inline-block;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
     color:var(--azul);background:var(--amarelo);padding:5px 13px;border-radius:999px;
@@ -104,14 +92,10 @@
   }
   .cartel{
     max-width:330px;width:80%;border-radius:18px;display:block;margin:0 auto 24px;
-    box-shadow:0 18px 48px rgba(0,0,0,.5);border:3px solid rgba(255,255,255,.85);
-    position:relative;z-index:2;
+    box-shadow:0 18px 48px rgba(0,0,0,.5);border:3px solid rgba(255,255,255,.85);position:relative;z-index:2;
   }
-  #landing h1{
-    font-size:2.4rem;line-height:1;color:var(--amarelo);position:relative;z-index:2;
-    text-shadow:0 3px 0 var(--rosa),0 6px 14px rgba(0,0,0,.4);
-  }
-  #landing h1 span{display:block;color:var(--turquesa);font-size:1.5rem;text-shadow:0 2px 0 #06204c,0 4px 10px rgba(0,0,0,.4)}
+  #landing h1{font-size:2.4rem;line-height:1;color:var(--amarelo);position:relative;z-index:2;text-shadow:0 3px 0 var(--rosa),0 6px 14px rgba(0,0,0,.4)}
+  #landing h1 .l2{display:block;color:var(--turquesa);font-size:1.5rem;text-shadow:0 2px 0 #06204c,0 4px 10px rgba(0,0,0,.4)}
   .land-datas{
     display:inline-block;margin-top:16px;background:var(--rosa-claro);color:var(--azul);
     font-weight:800;font-size:1.02rem;padding:8px 22px;border-radius:999px;
@@ -121,8 +105,7 @@
     margin-top:28px;position:relative;z-index:2;cursor:pointer;border:none;
     font-family:inherit;font-size:1.15rem;font-weight:800;color:var(--azul);
     background:linear-gradient(180deg,var(--amarelo),#ffc400);
-    padding:16px 38px;border-radius:999px;box-shadow:0 8px 22px rgba(255,210,51,.45);
-    transition:transform .15s, box-shadow .15s;
+    padding:16px 38px;border-radius:999px;box-shadow:0 8px 22px rgba(255,210,51,.45);transition:transform .15s, box-shadow .15s;
   }
   .btn-programa:active{transform:scale(.96)}
   .land-nota{margin-top:26px;color:#aebfe6;font-size:.78rem;position:relative;z-index:2;max-width:340px}
@@ -136,10 +119,9 @@
   .btn-instalar.show{display:inline-flex}
   .btn-instalar:active{transform:scale(.96)}
 
-  /* ================= APP ================= */
+  /* ============ APP ============ */
   #app{display:none}
   #app.show{display:block}
-
   .topbar{
     position:sticky;top:0;z-index:80;background:var(--topbar-bg);
     backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -147,69 +129,60 @@
     padding:calc(var(--safe-top) + 8px) 14px 12px;box-shadow:0 6px 18px rgba(0,0,0,.18);
   }
   .tb-row1{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .home-btn{
-    display:flex;align-items:center;gap:8px;cursor:pointer;border:none;background:transparent;
-    color:var(--topbar-text);font-family:inherit;font-weight:800;font-size:1rem;padding:4px 4px;
-  }
+  .home-btn{display:flex;align-items:center;gap:8px;cursor:pointer;border:none;background:transparent;
+    color:var(--topbar-text);font-family:inherit;font-weight:800;font-size:1rem;padding:4px 4px}
   .home-btn img{width:30px;height:30px;border-radius:8px;border:1.5px solid rgba(255,255,255,.4)}
-  .home-btn .tt{line-height:1}
+  .home-btn .tt{line-height:1;text-align:left}
   .home-btn .tt small{display:block;font-size:.62rem;font-weight:600;opacity:.8}
-  .theme-btn{
-    margin-left:auto;cursor:pointer;border:1px solid var(--control-border);
-    background:var(--control-bg);color:var(--control-text);width:40px;height:40px;
-    border-radius:12px;font-size:1.15rem;display:grid;place-items:center;transition:transform .15s;
+  .tb-actions{margin-left:auto;display:flex;gap:8px}
+  .icon-btn{
+    cursor:pointer;border:1px solid var(--control-border);background:var(--control-bg);color:var(--control-text);
+    height:40px;border-radius:12px;display:grid;place-items:center;transition:transform .15s;font-family:inherit;
   }
-  .theme-btn:active{transform:scale(.9)}
+  .icon-btn:active{transform:scale(.9)}
+  .theme-btn{width:40px;font-size:1.15rem}
+  .lang-btn{padding:0 13px;font-size:.82rem;font-weight:800;letter-spacing:.03em}
   .controls{display:flex;flex-direction:column;gap:9px}
   .sel-wrap{position:relative}
   .sel-wrap::after{content:"▾";position:absolute;right:16px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--control-text);opacity:.8}
   select#sel{
-    width:100%;appearance:none;-webkit-appearance:none;font-family:inherit;font-weight:700;
-    font-size:1rem;color:var(--control-text);background:var(--control-bg);
-    border:1.5px solid var(--control-border);border-radius:14px;padding:12px 38px 12px 14px;cursor:pointer;
+    width:100%;appearance:none;-webkit-appearance:none;font-family:inherit;font-weight:700;font-size:1rem;
+    color:var(--control-text);background:var(--control-bg);border:1.5px solid var(--control-border);
+    border-radius:14px;padding:12px 38px 12px 14px;cursor:pointer;
   }
   select#sel option, select#sel optgroup{color:#1a2238;background:#fff}
   .search-wrap{position:relative}
   .search-wrap .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.7;font-size:.95rem}
   input#busca{
-    width:100%;font-family:inherit;font-size:.95rem;color:var(--control-text);
-    background:var(--control-bg);border:1.5px solid var(--control-border);
-    border-radius:14px;padding:11px 38px 11px 36px;
+    width:100%;font-family:inherit;font-size:.95rem;color:var(--control-text);background:var(--control-bg);
+    border:1.5px solid var(--control-border);border-radius:14px;padding:11px 38px 11px 36px;
   }
   input#busca::placeholder{color:var(--control-text);opacity:.55}
-  .clear-busca{
-    position:absolute;right:8px;top:50%;transform:translateY(-50%);border:none;background:transparent;
-    color:var(--control-text);font-size:1.1rem;cursor:pointer;padding:6px;display:none;
-  }
+  .clear-busca{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:none;background:transparent;
+    color:var(--control-text);font-size:1.1rem;cursor:pointer;padding:6px;display:none}
   .clear-busca.show{display:block}
 
   main{max-width:680px;margin:0 auto;padding:20px 16px calc(48px + var(--safe-bot))}
-
   .seccion-titulo{display:flex;align-items:center;gap:10px;margin:6px 4px 16px;color:var(--titulo)}
   .seccion-titulo h2{font-size:1.3rem;letter-spacing:.3px}
   .seccion-titulo .em{font-size:1.45rem}
   .seccion-titulo .liña{flex:1;height:2px;background:linear-gradient(90deg,var(--amarelo),transparent);border-radius:2px}
-
   .dia-data{
     text-align:center;color:var(--azul);font-weight:800;margin:0 0 18px;
     background:linear-gradient(180deg,var(--amarelo),#ffc400);
     padding:12px;border-radius:var(--radio);box-shadow:var(--sombra);font-size:1.12rem;
   }
   .dia-data small{display:block;font-weight:600;font-size:.78rem;color:var(--azul-2);opacity:.9}
-
   .info-banner{
     background:linear-gradient(135deg,var(--turquesa),var(--azul-claro));
-    color:#fff;border-radius:var(--radio);padding:16px;margin:0 0 16px;
-    box-shadow:var(--sombra);text-align:center;
+    color:#fff;border-radius:var(--radio);padding:16px;margin:0 0 16px;box-shadow:var(--sombra);text-align:center;
   }
   .info-banner h3{font-size:1.02rem;margin-bottom:5px}
   .info-banner p{font-size:.85rem;opacity:.95}
 
-  /* tarxetas */
   .evento{
-    background:var(--card);border-radius:var(--radio);padding:15px 15px 13px;
-    margin-bottom:13px;box-shadow:var(--sombra);position:relative;overflow:hidden;
-    border-left:6px solid var(--rosa);animation:fade .3s ease;
+    background:var(--card);border-radius:var(--radio);padding:15px 15px 13px;margin-bottom:13px;
+    box-shadow:var(--sombra);position:relative;overflow:hidden;border-left:6px solid var(--rosa);animation:fade .3s ease;
   }
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   .evento.tipo-musica{border-left-color:var(--rosa)}
@@ -217,27 +190,21 @@
   .evento.tipo-deporte{border-left-color:var(--turquesa)}
   .evento.tipo-infantil{border-left-color:var(--amarelo)}
   .evento.tipo-permanente{border-left-color:var(--azul-claro)}
-
   .ev-top{display:flex;gap:13px;align-items:flex-start}
   .ev-icon{flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;background:#f3f6ff}
   .ev-body{flex:1;min-width:0;padding-right:38px}
   .ev-titulo{font-size:1.06rem;font-weight:800;color:var(--azul);line-height:1.2}
-
-  .fav-btn{
-    position:absolute;top:10px;right:10px;border:none;background:transparent;cursor:pointer;
-    font-size:1.5rem;line-height:1;color:#c9d2e6;transition:transform .15s,color .15s;padding:2px;
-  }
+  .fav-btn{position:absolute;top:10px;right:10px;border:none;background:transparent;cursor:pointer;
+    font-size:1.5rem;line-height:1;color:#c9d2e6;transition:transform .15s,color .15s;padding:2px}
   .fav-btn.on{color:var(--amarelo);text-shadow:0 1px 4px rgba(230,168,0,.5)}
   .fav-btn:active{transform:scale(1.3)}
-
   .ev-detalle{margin-top:8px;font-size:.85rem;color:var(--detalle);line-height:1.55}
   .ev-detalle b{color:var(--azul)}
-
   .ev-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .chip{display:inline-flex;align-items:center;gap:5px;font-size:.77rem;font-weight:600;
     padding:4px 10px;border-radius:999px;white-space:nowrap;text-decoration:none}
   .chip.hora{background:#fff0d6;color:#9a6800}
-  .chip.lugar{background:#e7faf7;color:#0c7a6e;cursor:pointer;transition:background .15s}
+  .chip.lugar{background:#e7faf7;color:#0c7a6e;cursor:pointer;transition:background .15s;white-space:normal}
   .chip.lugar:active{background:#cdf2ec}
   .chip.dia{background:#eef0ff;color:#41499a}
   .chip.tipo{color:#fff}
@@ -247,125 +214,96 @@
   .chip.tipo.tipo-infantil{background:#e0a800}
   .chip.tipo.tipo-permanente{background:var(--azul-claro)}
 
-  .ev-acciones{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  /* acciones como ICONOS, a todo o ancho */
+  .ev-acciones{display:flex;gap:8px;margin-top:12px}
   .acc-btn{
-    display:inline-flex;align-items:center;gap:6px;font-family:inherit;font-size:.8rem;font-weight:700;
-    border:1.5px solid #dfe5f2;background:#f6f8ff;color:var(--azul);padding:7px 13px;
-    border-radius:11px;cursor:pointer;transition:background .15s,transform .12s;text-decoration:none;
+    flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:inherit;
+    border:1.5px solid #dfe5f2;background:#f6f8ff;color:var(--azul);height:42px;border-radius:12px;
+    cursor:pointer;transition:background .15s,transform .12s;text-decoration:none;
   }
+  .acc-btn svg{width:21px;height:21px;display:block}
   .acc-btn:active{transform:scale(.95)}
-  .acc-btn.cal{background:#eef6ff;border-color:#cfe2ff}
+  .acc-btn.cal{background:#eef6ff;border-color:#cfe2ff;color:#1565c0}
+  .acc-btn.mapa{background:#e7faf7;border-color:#b9ece4;color:#0c7a6e}
   .acc-btn.share{background:#fdeef6;border-color:#ffcfe6;color:#b32b78}
 
-  /* badge "en directo agora" */
-  .ev-live{
-    display:inline-flex;align-items:center;gap:6px;margin-top:9px;
-    background:#e8202e;color:#fff;font-size:.74rem;font-weight:800;letter-spacing:.04em;
-    padding:4px 11px;border-radius:999px;text-transform:uppercase;
-    box-shadow:0 2px 10px rgba(232,32,46,.4);
-  }
-  .ev-live .dot{
-    width:8px;height:8px;border-radius:50%;background:#fff;
-    animation:pulse 1.1s infinite;
-  }
+  .ev-live{display:inline-flex;align-items:center;gap:6px;margin-top:9px;background:#e8202e;color:#fff;
+    font-size:.74rem;font-weight:800;letter-spacing:.04em;padding:4px 11px;border-radius:999px;
+    text-transform:uppercase;box-shadow:0 2px 10px rgba(232,32,46,.4)}
+  .ev-live .dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.1s infinite}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-  .evento.is-live{
-    box-shadow:0 0 0 2px #e8202e, var(--sombra);
-  }
+  .evento.is-live{box-shadow:0 0 0 2px #e8202e, var(--sombra)}
 
-  /* estados baleiros */
-  .empty{
-    text-align:center;color:var(--titulo);background:var(--card);color:var(--texto);
-    border-radius:var(--radio);padding:34px 22px;box-shadow:var(--sombra);margin-top:6px;
-  }
+  .empty{text-align:center;background:var(--card);color:var(--texto);border-radius:var(--radio);
+    padding:34px 22px;box-shadow:var(--sombra);margin-top:6px}
   .empty .big{font-size:2.6rem;display:block;margin-bottom:10px}
   .empty h3{color:var(--azul);font-size:1.1rem;margin-bottom:6px}
   .empty p{font-size:.88rem;color:var(--detalle)}
 
-  /* footer */
-  footer{
-    text-align:center;color:var(--footer);padding:32px 20px calc(40px + var(--safe-bot));
-    font-size:.85rem;border-top:1px solid var(--topbar-border);margin-top:20px;position:relative;overflow:hidden;
-  }
+  footer{text-align:center;color:var(--footer);padding:32px 20px calc(40px + var(--safe-bot));
+    font-size:.85rem;border-top:1px solid var(--topbar-border);margin-top:20px;position:relative;overflow:hidden}
   footer .deco-foot{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);width:220px;opacity:.16;pointer-events:none}
   footer .rel{position:relative;z-index:2}
   footer .oficial{margin-top:6px;font-size:.8rem}
   footer .oficial a{color:var(--footer);text-decoration:underline}
-  footer .firma{display:inline-flex;align-items:center;gap:8px;margin-top:16px;
-    background:var(--control-bg);color:var(--footer);padding:9px 18px;border-radius:999px;border:1px solid var(--control-border)}
+  footer .firma{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:var(--control-bg);
+    color:var(--footer);padding:9px 18px;border-radius:999px;border:1px solid var(--control-border)}
   footer .firma a{color:var(--titulo);font-weight:700;text-decoration:none}
   footer .creditos{margin-top:14px;font-size:.77rem;color:var(--footer-soft)}
 
-  /* toast */
-  #toast{
-    position:fixed;left:50%;bottom:calc(24px + var(--safe-bot));
-    transform:translateX(-50%) translateY(20px);
+  #toast{position:fixed;left:50%;bottom:calc(24px + var(--safe-bot));transform:translateX(-50%) translateY(20px);
     background:#0a2a5e;color:#fff;padding:12px 20px;border-radius:14px;font-size:.88rem;font-weight:600;
     box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:300;opacity:0;pointer-events:none;
-    transition:opacity .25s, transform .25s;max-width:90vw;text-align:center;
-  }
+    transition:opacity .25s, transform .25s;max-width:90vw;text-align:center}
   #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-  .top-btn{
-    position:fixed;right:16px;bottom:calc(18px + var(--safe-bot));z-index:60;
-    width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;
-    background:var(--rosa);color:#fff;font-size:1.25rem;box-shadow:0 6px 18px rgba(0,0,0,.35);
-    opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(10px);
-  }
+  .top-btn{position:fixed;right:16px;bottom:calc(18px + var(--safe-bot));z-index:60;width:46px;height:46px;
+    border-radius:50%;border:none;cursor:pointer;background:var(--rosa);color:#fff;font-size:1.25rem;
+    box-shadow:0 6px 18px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(10px)}
   .top-btn.show{opacity:1;pointer-events:auto;transform:none}
 
   @media(min-width:560px){
     #landing h1{font-size:3rem}
-    #landing h1 span{font-size:1.9rem}
+    #landing h1 .l2{font-size:1.9rem}
     .cartel{max-width:360px}
   }
 </style>
 </head>
 <body>
 
-<!-- ===================== LANDING ===================== -->
+<!-- ============ LANDING ============ -->
 <section id="landing">
+  <div class="land-lang">
+    <button id="langGl" aria-label="Galego">GL</button>
+    <button id="langEs" aria-label="Castellano">ES</button>
+  </div>
   <img src="img/fireworks2.png" alt="" class="land-deco l" aria-hidden="true">
   <img src="img/fireworks2.png" alt="" class="land-deco r" aria-hidden="true">
-  <span class="badge-no-oficial">Programa non oficial</span>
+  <span class="badge-no-oficial" id="badgeNoOficial">Programa non oficial</span>
   <img src="img/cartel.jpg" alt="Cartel das Festas de Ourense 2026" class="cartel">
-  <h1>Festas de<span>Ourense 2026</span></h1>
-  <div class="land-datas">🗓️ Do 17 ao 21 de xuño</div>
+  <h1><span class="l1" id="landH1a">Festas de</span><span class="l2" id="landH1b">Ourense 2026</span></h1>
+  <div class="land-datas" id="landDatas">🗓️ Do 17 ao 21 de xuño</div>
   <button class="btn-programa" id="verPrograma">Ver programa →</button>
   <button class="btn-instalar" id="btnInstalar">📲 Instalar a app</button>
-  <p class="land-nota">
-    Proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a> · non oficial.<br>
-    Programa oficial en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal (PDF) ↗</a>
-  </p>
+  <p class="land-nota" id="landNota"></p>
 </section>
 
-<!-- ===================== APP ===================== -->
+<!-- ============ APP ============ -->
 <div id="app">
   <div class="topbar">
     <div class="tb-row1">
-      <button class="home-btn" id="homeBtn" aria-label="Volver ao cartel">
+      <button class="home-btn" id="homeBtn" aria-label="Inicio">
         <img src="img/icon.png" alt="">
-        <span class="tt">Festas '26<small>Ourense · 17–21 xuño</small></span>
+        <span class="tt"><span id="brand">Festas '26</span><small id="brandSub">Ourense · 17–21 xuño</small></span>
       </button>
-      <button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">🌙</button>
+      <div class="tb-actions">
+        <button class="icon-btn lang-btn" id="langBtn" aria-label="Cambiar idioma">ES</button>
+        <button class="icon-btn theme-btn" id="themeBtn" aria-label="Cambiar tema">🌙</button>
+      </div>
     </div>
     <div class="controls">
       <div class="sel-wrap">
-        <select id="sel" aria-label="Seleccionar día ou sección">
-          <optgroup label="⭐ Os meus eventos">
-            <option value="favoritos">★ Favoritos</option>
-          </optgroup>
-          <optgroup label="📅 Por día">
-            <option value="mer" selected>Mércores 17 de xuño</option>
-            <option value="xov">Xoves 18 de xuño</option>
-            <option value="ven">Venres 19 de xuño</option>
-            <option value="sab">Sábado 20 de xuño</option>
-            <option value="dom">Domingo 21 de xuño</option>
-          </optgroup>
-          <optgroup label="🎪 Durante toda a festa">
-            <option value="permanente">Actividades permanentes</option>
-          </optgroup>
-        </select>
+        <select id="sel" aria-label="Sección"></select>
       </div>
       <div class="search-wrap">
         <span class="ic">🔍</span>
@@ -380,93 +318,182 @@
   <footer>
     <img src="img/fireworks.png" alt="" class="deco-foot" aria-hidden="true">
     <div class="rel">
-      <p><strong>Festas de Ourense 2026</strong> · 17–21 de xuño</p>
-      <p class="oficial">Programa oficial (PDF) en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal ↗</a></p>
-      <div class="firma">🎆 Un proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a></div>
-      <p class="creditos">
-        Esta web NON é unha aplicación oficial do Concello de Ourense.<br>
-        Datos suxeitos a posibles cambios. Os favoritos gárdanse só no teu dispositivo.
-      </p>
+      <p id="footTitulo"></p>
+      <p class="oficial" id="footOficial"></p>
+      <div class="firma" id="footFirma"></div>
+      <p class="creditos" id="footCreditos"></p>
     </div>
   </footer>
 </div>
 
-<button class="top-btn" id="topBtn" aria-label="Volver arriba">↑</button>
+<button class="top-btn" id="topBtn" aria-label="Arriba">↑</button>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
+/* ================= I18N ================= */
+const I18N={
+  gl:{
+    badge_no_oficial:'Programa non oficial',
+    land_h1a:'Festas de', land_h1b:'Ourense 2026',
+    land_datas:'🗓️ Do 17 ao 21 de xuño',
+    ver_programa:'Ver programa →',
+    instalar:'📲 Instalar a app',
+    land_nota:'Proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a> · non oficial.<br>Programa oficial en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal (PDF) ↗</a>',
+    brand:"Festas '26", brand_sub:'Ourense · 17–21 xuño',
+    aria_idioma:'Cambiar idioma', aria_tema:'Cambiar tema', aria_inicio:'Inicio', aria_arriba:'Volver arriba',
+    aria_seccion:'Sección', aria_limpar:'Limpar busca', aria_fav:'Gardar en favoritos',
+    buscar_ph:'Buscar evento ou lugar…',
+    og_eventos:'⭐ Os meus eventos', opt_favoritos:'★ Favoritos',
+    og_dia:'📅 Por día', og_perm:'🎪 Durante toda a festa', opt_perm:'Actividades permanentes',
+    sec_resultados:'Resultados', sec_favoritos:'Os meus favoritos', sec_permanente:'Durante toda a festa',
+    banner_h:'🎪 Aberto os 5 días', banner_p:'Mercado Medieval, atraccións e xogos acuáticos do 17 ao 21 de xuño.',
+    fav_vacio_h:'Aínda non tes favoritos', fav_vacio_p:'Toca a estrela ☆ en calquera evento para gardalo aquí e telo sempre á man.',
+    sen_res_h:'Sen resultados', sen_res_p:'Non atopamos nada para «%s». Proba con outro nome ou lugar.',
+    actividades:'actividades programadas', de_mes:'de xuño',
+    en_directo:'En directo agora',
+    t_cal:'Engadir ao calendario', t_mapa:'Como chegar', t_share:'Compartir', t_mapa_chip:'Abrir no mapa',
+    toast_fav_add:'Gardado en favoritos ⭐', toast_fav_del:'Eliminado dos favoritos',
+    toast_cal:'Evento listo para o teu calendario 📅', toast_copy:'Copiado ao portapapeis 📋',
+    toast_install:'Instalando a app… 🎉', toast_installed:'App instalada! Xa a tes na pantalla de inicio 📲',
+    toast_update:'App actualizada á última versión ✨',
+    prompt_share:'Copia e comparte este evento:', share_festa:'Festas de Ourense 2026 · 17–21 xuño', share_toda:'Toda a festa',
+    foot_titulo:'<strong>Festas de Ourense 2026</strong> · 17–21 de xuño',
+    foot_oficial:'Programa oficial (PDF) en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal ↗</a>',
+    foot_firma:'🎆 Un proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a>',
+    foot_creditos:'Esta web NON é unha aplicación oficial do Concello de Ourense.<br>Datos suxeitos a posibles cambios. Os favoritos gárdanse só no teu dispositivo.',
+    cal_desc:'Festas de Ourense 2026 · Programa non oficial (jltaboada.com). Info oficial: ourense.gal'
+  },
+  es:{
+    badge_no_oficial:'Programa no oficial',
+    land_h1a:'Fiestas de', land_h1b:'Ourense 2026',
+    land_datas:'🗓️ Del 17 al 21 de junio',
+    ver_programa:'Ver programa →',
+    instalar:'📲 Instalar la app',
+    land_nota:'Proyecto personal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a> · no oficial.<br>Programa oficial en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal (PDF) ↗</a>',
+    brand:"Fiestas '26", brand_sub:'Ourense · 17–21 junio',
+    aria_idioma:'Cambiar idioma', aria_tema:'Cambiar tema', aria_inicio:'Inicio', aria_arriba:'Volver arriba',
+    aria_seccion:'Sección', aria_limpar:'Limpiar búsqueda', aria_fav:'Guardar en favoritos',
+    buscar_ph:'Buscar evento o lugar…',
+    og_eventos:'⭐ Mis eventos', opt_favoritos:'★ Favoritos',
+    og_dia:'📅 Por día', og_perm:'🎪 Durante toda la fiesta', opt_perm:'Actividades permanentes',
+    sec_resultados:'Resultados', sec_favoritos:'Mis favoritos', sec_permanente:'Durante toda la fiesta',
+    banner_h:'🎪 Abierto los 5 días', banner_p:'Mercado Medieval, atracciones y juegos acuáticos del 17 al 21 de junio.',
+    fav_vacio_h:'Aún no tienes favoritos', fav_vacio_p:'Toca la estrella ☆ en cualquier evento para guardarlo aquí y tenerlo siempre a mano.',
+    sen_res_h:'Sin resultados', sen_res_p:'No encontramos nada para «%s». Prueba con otro nombre o lugar.',
+    actividades:'actividades programadas', de_mes:'de junio',
+    en_directo:'En directo ahora',
+    t_cal:'Añadir al calendario', t_mapa:'Cómo llegar', t_share:'Compartir', t_mapa_chip:'Abrir en el mapa',
+    toast_fav_add:'Guardado en favoritos ⭐', toast_fav_del:'Eliminado de favoritos',
+    toast_cal:'Evento listo para tu calendario 📅', toast_copy:'Copiado al portapapeles 📋',
+    toast_install:'Instalando la app… 🎉', toast_installed:'¡App instalada! Ya la tienes en la pantalla de inicio 📲',
+    toast_update:'App actualizada a la última versión ✨',
+    prompt_share:'Copia y comparte este evento:', share_festa:'Fiestas de Ourense 2026 · 17–21 junio', share_toda:'Toda la fiesta',
+    foot_titulo:'<strong>Fiestas de Ourense 2026</strong> · 17–21 de junio',
+    foot_oficial:'Programa oficial (PDF) en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal ↗</a>',
+    foot_firma:'🎆 Un proyecto personal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a>',
+    foot_creditos:'Esta web NO es una aplicación oficial del Concello de Ourense.<br>Datos sujetos a posibles cambios. Los favoritos se guardan solo en tu dispositivo.',
+    cal_desc:'Fiestas de Ourense 2026 · Programa no oficial (jltaboada.com). Info oficial: ourense.gal'
+  }
+};
+
+const LS_FAV='festas26_favs', LS_THEME='festas26_theme', LS_LANG='festas26_lang';
+let LANG='gl';
+try{const s=localStorage.getItem(LS_LANG); if(s==='gl'||s==='es') LANG=s;}catch(e){}
+function T(k,arg){let s=(I18N[LANG]&&I18N[LANG][k])||(I18N.gl[k])||k; if(arg!=null)s=s.replace('%s',arg); return s;}
+function tr(v){return (v&&typeof v==='object')?(v[LANG]!=null?v[LANG]:v.gl):v;}
+
+/* ================= ICONOS (SVG) ================= */
+const SVG={
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><line x1="16" y1="2.5" x2="16" y2="6.5"/><line x1="8" y1="2.5" x2="8" y2="6.5"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+  mapa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10.5c0 6-9 11.5-9 11.5s-9-5.5-9-11.5a9 9 0 0 1 18 0z"/><circle cx="12" cy="10.5" r="2.7"/></svg>',
+  share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><line x1="8.3" y1="13.4" x2="15.7" y2="17.6"/><line x1="15.7" y1="6.4" x2="8.3" y2="10.6"/></svg>'
+};
+
 /* ================= DATOS ================= */
-const TIPOS = {
-  musica:{tag:'Música',ic:'🎵'},
-  espectaculo:{tag:'Espectáculo',ic:'🎆'},
-  deporte:{tag:'Deporte',ic:'🏅'},
-  infantil:{tag:'Infantil',ic:'🎈'},
-  permanente:{tag:'Toda a festa',ic:'⭐'}
+const TIPOS={
+  musica:{tag:{gl:'Música',es:'Música'},ic:'🎵'},
+  espectaculo:{tag:{gl:'Espectáculo',es:'Espectáculo'},ic:'🎆'},
+  deporte:{tag:{gl:'Deporte',es:'Deporte'},ic:'🏅'},
+  infantil:{tag:{gl:'Infantil',es:'Infantil'},ic:'🎈'},
+  permanente:{tag:{gl:'Toda a festa',es:'Toda la fiesta'},ic:'⭐'}
 };
 const DIA_DATE={mer:'20260617',xov:'20260618',ven:'20260619',sab:'20260620',dom:'20260621'};
 const DIA_INFO={
-  mer:{nome:'Mércores',num:17}, xov:{nome:'Xoves',num:18}, ven:{nome:'Venres',num:19},
-  sab:{nome:'Sábado',num:20}, dom:{nome:'Domingo',num:21}
+  mer:{nome:{gl:'Mércores',es:'Miércoles'},num:17},
+  xov:{nome:{gl:'Xoves',es:'Jueves'},num:18},
+  ven:{nome:{gl:'Venres',es:'Viernes'},num:19},
+  sab:{nome:{gl:'Sábado',es:'Sábado'},num:20},
+  dom:{nome:{gl:'Domingo',es:'Domingo'},num:21}
+};
+/* lugares reutilizados */
+const L={
+  ponte:{gl:'Ponte Romana',es:'Puente Romano'},
+  ext:{gl:'Exterior Pavillón dos Remedios',es:'Exterior Pabellón dos Remedios'},
+  volei:{gl:'Campo Vólei Praia de Oira',es:'Campo Vóley Playa de Oira'},
+  cancha:{gl:'Cancha Central · Pavillón dos Remedios',es:'Cancha Central · Pabellón dos Remedios'},
+  arenal:{gl:'Praza de Concepción Arenal',es:'Plaza de Concepción Arenal'},
+  anexo:{gl:'Pavillón Anexo dos Remedios',es:'Pabellón Anexo dos Remedios'},
+  pistas:{gl:'Pistas exteriores · Pavillón dos Remedios',es:'Pistas exteriores · Pabellón dos Remedios'}
 };
 
 const PERMANENTES=[
   {tipo:'permanente',titulo:'Mercado Medieval',icon:'🏰',
-   detalle:'<b>Do mércores 17 ao domingo 21.</b><br>Apertura: mércores 17 ás 17.00 h.<br>Horario: de 11.00 a 01.00 h (domingo ata as 22.00 h).',
-   lugar:'Contorna da Ponte Romana'},
-  {tipo:'permanente',titulo:'Atraccións',icon:'🎡',
-   detalle:'<b>Do mércores 17 ao domingo 21.</b><br>Mér, xov e ven: de 19.00 a 02.00 h.<br>Sábado: de 17.00 a 02.00 h.<br>Domingo: de 17.00 a 23.00 h.',
-   lugar:'Parque Barbaña'},
-  {tipo:'infantil',titulo:'Xincana inchables acuáticos',icon:'💦',
-   detalle:'<b>Do mércores 17 ao domingo 21.</b><br>De 17.00 a 20.00 h.<br>Sábado e domingo: de 11.30 a 13.00 e de 17.00 a 20.00 h.',
-   lugar:'Parque da Ribeira de Canedo'}
+   detalle:{gl:'<b>Do mércores 17 ao domingo 21.</b><br>Apertura: mércores 17 ás 17.00 h.<br>Horario: de 11.00 a 01.00 h (domingo ata as 22.00 h).',
+            es:'<b>Del miércoles 17 al domingo 21.</b><br>Apertura: miércoles 17 a las 17.00 h.<br>Horario: de 11.00 a 01.00 h (domingo hasta las 22.00 h).'},
+   lugar:{gl:'Contorna da Ponte Romana',es:'Alrededores del Puente Romano'}},
+  {tipo:'permanente',titulo:{gl:'Atraccións',es:'Atracciones'},icon:'🎡',
+   detalle:{gl:'<b>Do mércores 17 ao domingo 21.</b><br>Mér, xov e ven: de 19.00 a 02.00 h.<br>Sábado: de 17.00 a 02.00 h.<br>Domingo: de 17.00 a 23.00 h.',
+            es:'<b>Del miércoles 17 al domingo 21.</b><br>Mié, jue y vie: de 19.00 a 02.00 h.<br>Sábado: de 17.00 a 02.00 h.<br>Domingo: de 17.00 a 23.00 h.'},
+   lugar:{gl:'Parque Barbaña',es:'Parque Barbaña'}},
+  {tipo:'infantil',titulo:{gl:'Xincana inchables acuáticos',es:'Gincana hinchables acuáticos'},icon:'💦',
+   detalle:{gl:'<b>Do mércores 17 ao domingo 21.</b><br>De 17.00 a 20.00 h.<br>Sábado e domingo: de 11.30 a 13.00 e de 17.00 a 20.00 h.',
+            es:'<b>Del miércoles 17 al domingo 21.</b><br>De 17.00 a 20.00 h.<br>Sábado y domingo: de 11.30 a 13.00 y de 17.00 a 20.00 h.'},
+   lugar:{gl:'Parque da Ribeira de Canedo',es:'Parque de la Ribeira de Canedo'}}
 ];
 const DIAS=[
   {id:'mer',eventos:[
-    {tipo:'musica',titulo:'Orquestra Magma',hora:'21.00 – 22.30 h',lugar:'Ponte Romana'},
-    {tipo:'espectaculo',titulo:'Pregón: Rober Bodegas',hora:'22.30 h',lugar:'Ponte Romana'},
-    {tipo:'espectaculo',titulo:'Espectáculo de Drons',hora:'23.00 h',lugar:'Ponte Romana'},
-    {tipo:'musica',titulo:'Orquestra Magma',hora:'23.20 – 01.00 h',lugar:'Ponte Romana'}
+    {tipo:'musica',titulo:'Orquestra Magma',hora:'21.00 – 22.30 h',lugar:L.ponte},
+    {tipo:'espectaculo',titulo:'Pregón: Rober Bodegas',hora:'22.30 h',lugar:L.ponte},
+    {tipo:'espectaculo',titulo:{gl:'Espectáculo de Drons',es:'Espectáculo de Drones'},hora:'23.00 h',lugar:L.ponte},
+    {tipo:'musica',titulo:'Orquestra Magma',hora:'23.20 – 01.00 h',lugar:L.ponte}
   ]},
   {id:'xov',eventos:[
-    {tipo:'deporte',titulo:'Portas abertas Vólei Praia (maiores de 15 anos)',hora:'18.30 – 20.00 h',lugar:'Campo Vólei Praia de Oira'},
-    {tipo:'musica',titulo:'M-Clan',hora:'23.00 – 01.00 h',lugar:'Exterior Pavillón dos Remedios'},
-    {tipo:'musica',titulo:'A Gramola · Sesión DJ’s',hora:'01.30 – 03.30 h',lugar:'Exterior Pavillón dos Remedios'}
+    {tipo:'deporte',titulo:{gl:'Portas abertas Vólei Praia (maiores de 15 anos)',es:'Puertas abiertas Vóley Playa (mayores de 15 años)'},hora:'18.30 – 20.00 h',lugar:L.volei},
+    {tipo:'musica',titulo:'M-Clan',hora:'23.00 – 01.00 h',lugar:L.ext},
+    {tipo:'musica',titulo:'A Gramola · Sesión DJ’s',hora:'01.30 – 03.30 h',lugar:L.ext}
   ]},
   {id:'ven',eventos:[
-    {tipo:'deporte',titulo:'Portas abertas Vólei Praia (6 a 14 anos)',hora:'18.30 – 20.00 h',lugar:'Campo Vólei Praia de Oira'},
-    {tipo:'deporte',titulo:'2.º Máster de Ourense de Futbolín',hora:'19.00 h',lugar:'Cancha Central · Pavillón dos Remedios'},
-    {tipo:'musica',titulo:'Miguel Ríos',hora:'23.00 – 01.00 h',lugar:'Exterior Pavillón dos Remedios'},
-    {tipo:'musica',titulo:'América',hora:'01.00 – 03.30 h',lugar:'Praza de Concepción Arenal'}
+    {tipo:'deporte',titulo:{gl:'Portas abertas Vólei Praia (6 a 14 anos)',es:'Puertas abiertas Vóley Playa (6 a 14 años)'},hora:'18.30 – 20.00 h',lugar:L.volei},
+    {tipo:'deporte',titulo:'2.º Máster de Ourense de Futbolín',hora:'19.00 h',lugar:L.cancha},
+    {tipo:'musica',titulo:'Miguel Ríos',hora:'23.00 – 01.00 h',lugar:L.ext},
+    {tipo:'musica',titulo:'América',hora:'01.00 – 03.30 h',lugar:L.arenal}
   ]},
   {id:'sab',eventos:[
-    {tipo:'deporte',titulo:'2.º Máster de Ourense de Futbolín',hora:'09.00 – 01.00 h',lugar:'Pavillón Anexo dos Remedios'},
-    {tipo:'espectaculo',titulo:'Breaking',hora:'17.00 – 22.00 h',lugar:'Pistas exteriores · Pavillón dos Remedios'},
-    {tipo:'infantil',titulo:'Festa das Cores',hora:'19.30 h',lugar:'Praza de Concepción Arenal'},
-    {tipo:'infantil',titulo:'Cantajuego',hora:'20.30 h',lugar:'Praza de Concepción Arenal'},
-    {tipo:'musica',titulo:'Dirty Suc',hora:'22.30 h',lugar:'Exterior Pavillón dos Remedios'},
-    {tipo:'musica',titulo:'Hard Gz',hora:'23.45 h',lugar:'Exterior Pavillón dos Remedios'},
-    {tipo:'musica',titulo:'Conductores Suicidas · Tributo a Sabina',hora:'00.00 h',lugar:'Praza de Concepción Arenal'},
-    {tipo:'musica',titulo:'A Gramola · Sesión DJ’s',hora:'01.30 h',lugar:'Exterior Pavillón dos Remedios'}
+    {tipo:'deporte',titulo:'2.º Máster de Ourense de Futbolín',hora:'09.00 – 01.00 h',lugar:L.anexo},
+    {tipo:'espectaculo',titulo:'Breaking',hora:'17.00 – 22.00 h',lugar:L.pistas},
+    {tipo:'infantil',titulo:{gl:'Festa das Cores',es:'Fiesta de los Colores'},hora:'19.30 h',lugar:L.arenal},
+    {tipo:'infantil',titulo:'Cantajuego',hora:'20.30 h',lugar:L.arenal},
+    {tipo:'musica',titulo:'Dirty Suc',hora:'22.30 h',lugar:L.ext},
+    {tipo:'musica',titulo:'Hard Gz',hora:'23.45 h',lugar:L.ext},
+    {tipo:'musica',titulo:'Conductores Suicidas · Tributo a Sabina',hora:'00.00 h',lugar:L.arenal},
+    {tipo:'musica',titulo:'A Gramola · Sesión DJ’s',hora:'01.30 h',lugar:L.ext}
   ]},
   {id:'dom',eventos:[
-    {tipo:'musica',titulo:'Orquestra Função Públika',hora:'21.30 – 23.50 h',lugar:'Ponte Romana'},
-    {tipo:'espectaculo',titulo:'Fogos Artificiais',hora:'00.00 h',lugar:'Ponte Romana'}
+    {tipo:'musica',titulo:'Orquestra Função Públika',hora:'21.30 – 23.50 h',lugar:L.ponte},
+    {tipo:'espectaculo',titulo:{gl:'Fogos Artificiais',es:'Fuegos Artificiales'},hora:'00.00 h',lugar:L.ponte}
   ]}
 ];
 
-/* lista plana con ids */
 const ALL_EVENTS=[];
-PERMANENTES.forEach((e,i)=>ALL_EVENTS.push({...e,id:'perm-'+i,diaId:'permanente',diaNome:'Toda a festa',diaNum:'',baseYmd:null}));
+PERMANENTES.forEach((e,i)=>ALL_EVENTS.push({...e,id:'perm-'+i,diaId:'permanente',diaNome:null,diaNum:'',baseYmd:null}));
 DIAS.forEach(d=>d.eventos.forEach((e,i)=>ALL_EVENTS.push({
   ...e,id:d.id+'-'+i,diaId:d.id,diaNome:DIA_INFO[d.id].nome,diaNum:DIA_INFO[d.id].num,baseYmd:DIA_DATE[d.id]
 })));
 
-/* ================= ESTADO / STORAGE ================= */
-const LS_FAV='festas26_favs', LS_THEME='festas26_theme';
+/* ================= ESTADO ================= */
 let FAVS=new Set();
 try{FAVS=new Set(JSON.parse(localStorage.getItem(LS_FAV)||'[]'));}catch(e){}
 function saveFavs(){try{localStorage.setItem(LS_FAV,JSON.stringify([...FAVS]));}catch(e){}}
-
 const state={mode:'mer',q:''};
 
 /* ================= UTILS ================= */
@@ -477,23 +504,23 @@ function mapsUrl(lugar){return 'https://www.google.com/maps/search/?api=1&query=
 /* ================= RENDER ================= */
 function eventoHTML(ev,showDia){
   const t=TIPOS[ev.tipo];
-  const fav=FAVS.has(ev.id);
-  const live=isLive(ev);
-  let chips=`<span class="chip tipo tipo-${ev.tipo}">${t.ic} ${t.tag}</span>`;
-  if(showDia && ev.diaId!=='permanente') chips+=`<span class="chip dia">📅 ${ev.diaNome} ${ev.diaNum}</span>`;
+  const titulo=tr(ev.titulo), lugar=tr(ev.lugar), detalleTxt=tr(ev.detalle), tag=tr(t.tag);
+  const fav=FAVS.has(ev.id), live=isLive(ev);
+  let chips=`<span class="chip tipo tipo-${ev.tipo}">${t.ic} ${tag}</span>`;
+  if(showDia && ev.diaId!=='permanente') chips+=`<span class="chip dia">📅 ${tr(ev.diaNome)} ${ev.diaNum}</span>`;
   if(ev.hora) chips+=`<span class="chip hora">🕐 ${ev.hora}</span>`;
-  if(ev.lugar) chips+=`<a class="chip lugar" href="${mapsUrl(ev.lugar)}" target="_blank" rel="noopener" title="Abrir no mapa">📍 ${esc(ev.lugar)} ↗</a>`;
-  const detalle=ev.detalle?`<div class="ev-detalle">${ev.detalle}</div>`:'';
-  const liveBadge=live?`<div class="ev-live"><span class="dot"></span>En directo agora</div>`:'';
-  const cal=(ev.baseYmd&&ev.hora)?`<button class="acc-btn cal" data-cal="${ev.id}">📅 Engadir ao calendario</button>`:'';
-  const mapa=ev.lugar?`<a class="acc-btn" href="${mapsUrl(ev.lugar)}" target="_blank" rel="noopener">🗺️ Como chegar</a>`:'';
-  const share=`<button class="acc-btn share" data-share="${ev.id}">↗ Compartir</button>`;
+  if(lugar) chips+=`<a class="chip lugar" href="${mapsUrl(lugar)}" target="_blank" rel="noopener" title="${T('t_mapa_chip')}">📍 ${esc(lugar)} ↗</a>`;
+  const detalle=detalleTxt?`<div class="ev-detalle">${detalleTxt}</div>`:'';
+  const liveBadge=live?`<div class="ev-live"><span class="dot"></span>${T('en_directo')}</div>`:'';
+  const cal=(ev.baseYmd&&ev.hora)?`<button class="acc-btn cal" data-cal="${ev.id}" aria-label="${T('t_cal')}" title="${T('t_cal')}">${SVG.cal}</button>`:'';
+  const mapa=lugar?`<a class="acc-btn mapa" href="${mapsUrl(lugar)}" target="_blank" rel="noopener" aria-label="${T('t_mapa')}" title="${T('t_mapa')}">${SVG.mapa}</a>`:'';
+  const share=`<button class="acc-btn share" data-share="${ev.id}" aria-label="${T('t_share')}" title="${T('t_share')}">${SVG.share}</button>`;
   return `<article class="evento tipo-${ev.tipo}${live?' is-live':''}" data-id="${ev.id}">
-    <button class="fav-btn ${fav?'on':''}" data-fav="${ev.id}" aria-label="Gardar en favoritos" title="Favorito">${fav?'★':'☆'}</button>
+    <button class="fav-btn ${fav?'on':''}" data-fav="${ev.id}" aria-label="${T('aria_fav')}" title="${T('aria_fav')}">${fav?'★':'☆'}</button>
     <div class="ev-top">
       <div class="ev-icon">${ev.icon||t.ic}</div>
       <div class="ev-body">
-        <div class="ev-titulo">${esc(ev.titulo)}</div>
+        <div class="ev-titulo">${esc(titulo)}</div>
         ${liveBadge}
         ${detalle}
         <div class="ev-meta">${chips}</div>
@@ -503,23 +530,17 @@ function eventoHTML(ev,showDia){
   </article>`;
 }
 
-/* ¿está o evento en directo agora? */
 function isLive(ev){
   const now=new Date();
-  // eventos permanentes: en directo durante os días da festa (17-21 xuño 2026)
-  if(ev.diaId==='permanente'){
-    const ini=new Date(2026,5,17,11,0), fin=new Date(2026,5,22,1,0);
-    return now>=ini && now<=fin;
-  }
-  const dts=horaToDates(ev);
-  if(!dts) return false;
+  if(ev.diaId==='permanente'){const ini=new Date(2026,5,17,11,0),fin=new Date(2026,5,22,1,0);return now>=ini&&now<=fin;}
+  const dts=horaToDates(ev); if(!dts) return false;
   return now>=dts.start && now<=dts.end;
 }
 
 function currentList(){
   if(state.q.trim()){
     const q=norm(state.q);
-    return ALL_EVENTS.filter(e=>norm(e.titulo).includes(q)||norm(e.lugar).includes(q)||norm(TIPOS[e.tipo].tag).includes(q));
+    return ALL_EVENTS.filter(e=>norm(tr(e.titulo)).includes(q)||norm(tr(e.lugar)).includes(q)||norm(tr(TIPOS[e.tipo].tag)).includes(q));
   }
   if(state.mode==='favoritos') return ALL_EVENTS.filter(e=>FAVS.has(e.id));
   if(state.mode==='permanente') return ALL_EVENTS.filter(e=>e.diaId==='permanente');
@@ -532,26 +553,19 @@ function render(){
   const list=currentList();
   const showDia=searching||state.mode==='favoritos';
   let head='';
-
   if(searching){
-    head=`<div class="seccion-titulo"><span class="em">🔍</span><h2>Resultados</h2><span class="liña"></span></div>`;
-    if(!list.length){
-      main.innerHTML=head+`<div class="empty"><span class="big">🔎</span><h3>Sen resultados</h3><p>Non atopamos nada para «${esc(state.q)}». Proba con outro nome ou lugar.</p></div>`;
-      return;
-    }
+    head=`<div class="seccion-titulo"><span class="em">🔍</span><h2>${T('sec_resultados')}</h2><span class="liña"></span></div>`;
+    if(!list.length){main.innerHTML=head+`<div class="empty"><span class="big">🔎</span><h3>${T('sen_res_h')}</h3><p>${T('sen_res_p',esc(state.q))}</p></div>`;return;}
   } else if(state.mode==='favoritos'){
-    head=`<div class="seccion-titulo"><span class="em">⭐</span><h2>Os meus favoritos</h2><span class="liña"></span></div>`;
-    if(!list.length){
-      main.innerHTML=head+`<div class="empty"><span class="big">⭐</span><h3>Aínda non tes favoritos</h3><p>Toca a estrela ☆ en calquera evento para gardalo aquí e telo sempre á man.</p></div>`;
-      return;
-    }
+    head=`<div class="seccion-titulo"><span class="em">⭐</span><h2>${T('sec_favoritos')}</h2><span class="liña"></span></div>`;
+    if(!list.length){main.innerHTML=head+`<div class="empty"><span class="big">⭐</span><h3>${T('fav_vacio_h')}</h3><p>${T('fav_vacio_p')}</p></div>`;return;}
   } else if(state.mode==='permanente'){
-    head=`<div class="seccion-titulo"><span class="em">🎪</span><h2>Durante toda a festa</h2><span class="liña"></span></div>
-          <div class="info-banner"><h3>🎪 Aberto os 5 días</h3><p>Mercado Medieval, atraccións e xogos acuáticos do 17 ao 21 de xuño.</p></div>`;
+    head=`<div class="seccion-titulo"><span class="em">🎪</span><h2>${T('sec_permanente')}</h2><span class="liña"></span></div>
+          <div class="info-banner"><h3>${T('banner_h')}</h3><p>${T('banner_p')}</p></div>`;
   } else {
     const d=DIA_INFO[state.mode];
-    head=`<div class="seccion-titulo"><span class="em">🎉</span><h2>${d.nome}</h2><span class="liña"></span></div>
-          <div class="dia-data">${d.nome}, ${d.num} de xuño<small>${list.length} actividades programadas</small></div>`;
+    head=`<div class="seccion-titulo"><span class="em">🎉</span><h2>${tr(d.nome)}</h2><span class="liña"></span></div>
+          <div class="dia-data">${tr(d.nome)}, ${d.num} ${T('de_mes')}<small>${list.length} ${T('actividades')}</small></div>`;
   }
   main.innerHTML=head+list.map(e=>eventoHTML(e,showDia)).join('');
 }
@@ -559,21 +573,17 @@ function render(){
 /* ================= FAVORITOS ================= */
 function updateFavOption(){
   const opt=document.querySelector('#sel option[value="favoritos"]');
-  opt.textContent='★ Favoritos'+(FAVS.size?' ('+FAVS.size+')':'');
+  if(opt) opt.textContent=T('opt_favoritos')+(FAVS.size?' ('+FAVS.size+')':'');
 }
 function toggleFav(id){
-  if(FAVS.has(id)){FAVS.delete(id);toast('Eliminado dos favoritos');}
-  else{FAVS.add(id);toast('Gardado en favoritos ⭐');}
+  if(FAVS.has(id)){FAVS.delete(id);toast(T('toast_fav_del'));}
+  else{FAVS.add(id);toast(T('toast_fav_add'));}
   saveFavs();updateFavOption();
   if(state.q.trim()||state.mode==='favoritos'){render();}
-  else{
-    document.querySelectorAll('[data-fav="'+id+'"]').forEach(b=>{
-      const on=FAVS.has(id);b.classList.toggle('on',on);b.textContent=on?'★':'☆';
-    });
-  }
+  else{document.querySelectorAll('[data-fav="'+id+'"]').forEach(b=>{const on=FAVS.has(id);b.classList.toggle('on',on);b.textContent=on?'★':'☆';});}
 }
 
-/* ================= CALENDARIO (.ics) ================= */
+/* ================= CALENDARIO ================= */
 function mkDate(ymd,h,m){return new Date(+ymd.slice(0,4),+ymd.slice(4,6)-1,+ymd.slice(6,8),h,m);}
 function horaToDates(ev){
   const times=(ev.hora||'').match(/(\d{1,2})\.(\d{2})/g)||[];
@@ -581,11 +591,8 @@ function horaToDates(ev){
   const [sh,sm]=times[0].split('.').map(Number);
   let start=mkDate(ev.baseYmd,sh,sm); if(sh<7) start.setDate(start.getDate()+1);
   let end;
-  if(times[1]){
-    const [eh,em]=times[1].split('.').map(Number);
-    end=mkDate(ev.baseYmd,eh,em); if(eh<7) end.setDate(end.getDate()+1);
-    if(end<=start) end.setDate(end.getDate()+1);
-  } else { end=new Date(start.getTime()+90*60000); }
+  if(times[1]){const [eh,em]=times[1].split('.').map(Number);end=mkDate(ev.baseYmd,eh,em);if(eh<7)end.setDate(end.getDate()+1);if(end<=start)end.setDate(end.getDate()+1);}
+  else{end=new Date(start.getTime()+90*60000);}
   return {start,end};
 }
 function p2(n){return String(n).padStart(2,'0');}
@@ -595,62 +602,44 @@ function icsEsc(s){return (s||'').replace(/\\/g,'\\\\').replace(/,/g,'\\,').repl
 function descargarICS(id){
   const ev=ALL_EVENTS.find(e=>e.id===id); if(!ev) return;
   const dts=horaToDates(ev); if(!dts) return;
-  const loc=ev.lugar?ev.lugar+', Ourense':'Ourense';
-  const desc='Festas de Ourense 2026 · Programa non oficial (jltaboada.com). Info oficial: ourense.gal';
+  const lugar=tr(ev.lugar);
+  const loc=lugar?lugar+', Ourense':'Ourense';
   const ics=[
-    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//jltaboada//Festas Ourense 2026//GL','CALSCALE:GREGORIAN',
-    'BEGIN:VEVENT',
-    'UID:'+id+'@festasourense2026',
-    'DTSTAMP:'+fmtUTC(new Date()),
-    'DTSTART:'+fmtLocal(dts.start),
-    'DTEND:'+fmtLocal(dts.end),
-    'SUMMARY:'+icsEsc(ev.titulo),
-    'LOCATION:'+icsEsc(loc),
-    'DESCRIPTION:'+icsEsc(desc),
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//jltaboada//Festas Ourense 2026//'+LANG.toUpperCase(),'CALSCALE:GREGORIAN',
+    'BEGIN:VEVENT','UID:'+id+'@festasourense2026','DTSTAMP:'+fmtUTC(new Date()),
+    'DTSTART:'+fmtLocal(dts.start),'DTEND:'+fmtLocal(dts.end),
+    'SUMMARY:'+icsEsc(tr(ev.titulo)),'LOCATION:'+icsEsc(loc),'DESCRIPTION:'+icsEsc(T('cal_desc')),
     'END:VEVENT','END:VCALENDAR'
   ].join('\r\n');
   const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download='festas-ourense-'+id+'.ics';
+  const a=document.createElement('a'); a.href=url; a.download='festas-ourense-'+id+'.ics';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1500);
-  toast('Evento listo para o teu calendario 📅');
+  toast(T('toast_cal'));
 }
 
 /* ================= COMPARTIR ================= */
 async function compartir(id){
   const ev=ALL_EVENTS.find(e=>e.id===id); if(!ev) return;
-  const dia = ev.diaId==='permanente' ? 'Toda a festa' : (ev.diaNome+' '+ev.diaNum+' de xuño');
-  const partes=[`🎉 ${ev.titulo}`,`📅 ${dia}`];
+  const dia=ev.diaId==='permanente'?T('share_toda'):(tr(ev.diaNome)+' '+ev.diaNum+' '+T('de_mes'));
+  const titulo=tr(ev.titulo), lugar=tr(ev.lugar);
+  const partes=[`🎉 ${titulo}`,`📅 ${dia}`];
   if(ev.hora) partes.push(`🕐 ${ev.hora}`);
-  if(ev.lugar) partes.push(`📍 ${ev.lugar}`);
-  partes.push('','Festas de Ourense 2026 · 17–21 xuño');
-  // enlace á app coa sección + evento destacado
-  const base=location.origin+location.pathname;
-  const url=base+'#'+(ev.diaId)+'/'+ev.id;
+  if(lugar) partes.push(`📍 ${lugar}`);
+  partes.push('',T('share_festa'));
+  const url=location.origin+location.pathname+'#'+ev.diaId+'/'+ev.id;
   const texto=partes.join('\n');
-  const shareData={title:'Festas de Ourense 2026 · '+ev.titulo, text:texto, url};
-  try{
-    if(navigator.share){ await navigator.share(shareData); return; }
-  }catch(err){ if(err && err.name==='AbortError') return; }
-  // fallback: copiar ao portapapeis
-  try{
-    await navigator.clipboard.writeText(texto+'\n'+url);
-    toast('Copiado ao portapapeis 📋');
-  }catch(e){
-    // último recurso
-    prompt('Copia e comparte este evento:', texto+'\n'+url);
-  }
+  const shareData={title:T('share_festa')+' · '+titulo,text:texto,url};
+  try{ if(navigator.share){await navigator.share(shareData);return;} }
+  catch(err){ if(err&&err.name==='AbortError') return; }
+  try{ await navigator.clipboard.writeText(texto+'\n'+url); toast(T('toast_copy')); }
+  catch(e){ prompt(T('prompt_share'), texto+'\n'+url); }
 }
 
 /* ================= TOAST ================= */
 let toastT;
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200);
-}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2400);}
 
 /* ================= TEMA ================= */
 function applyTheme(th){
@@ -659,137 +648,148 @@ function applyTheme(th){
   document.querySelector('meta[name=theme-color]').setAttribute('content',th==='dark'?'#0a2a5e':'#eef4ff');
   try{localStorage.setItem(LS_THEME,th);}catch(e){}
 }
-(function(){
-  let th='dark';
-  try{th=localStorage.getItem(LS_THEME)||'dark';}catch(e){}
-  applyTheme(th);
-})();
+(function(){let th='dark';try{th=localStorage.getItem(LS_THEME)||'dark';}catch(e){}applyTheme(th);})();
 
-/* ================= EVENTOS UI ================= */
+/* ================= IDIOMA ================= */
+function buildSelect(){
+  const cur=state.mode;
+  sel.innerHTML=`
+    <optgroup label="${T('og_eventos')}"><option value="favoritos">${T('opt_favoritos')}</option></optgroup>
+    <optgroup label="${T('og_dia')}">
+      <option value="mer">${tr(DIA_INFO.mer.nome)} 17 ${T('de_mes')}</option>
+      <option value="xov">${tr(DIA_INFO.xov.nome)} 18 ${T('de_mes')}</option>
+      <option value="ven">${tr(DIA_INFO.ven.nome)} 19 ${T('de_mes')}</option>
+      <option value="sab">${tr(DIA_INFO.sab.nome)} 20 ${T('de_mes')}</option>
+      <option value="dom">${tr(DIA_INFO.dom.nome)} 21 ${T('de_mes')}</option>
+    </optgroup>
+    <optgroup label="${T('og_perm')}"><option value="permanente">${T('opt_perm')}</option></optgroup>`;
+  sel.value=cur;
+  updateFavOption();
+}
+function setHtml(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
+function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt;}
+function setAttr(id,attr,val){const el=document.getElementById(id);if(el)el.setAttribute(attr,val);}
+
+function applyI18n(){
+  document.documentElement.setAttribute('lang',LANG);
+  document.querySelector('meta[property="og:locale"]').setAttribute('content',LANG==='gl'?'gl_ES':'es_ES');
+  // landing
+  setText('badgeNoOficial',T('badge_no_oficial'));
+  setText('landH1a',T('land_h1a')); setText('landH1b',T('land_h1b'));
+  setText('landDatas',T('land_datas'));
+  setText('verPrograma',T('ver_programa'));
+  setText('btnInstalar',T('instalar'));
+  setHtml('landNota',T('land_nota'));
+  // topbar
+  setText('brand',T('brand')); setText('brandSub',T('brand_sub'));
+  setAttr('langBtn','aria-label',T('aria_idioma')); setAttr('themeBtn','aria-label',T('aria_tema'));
+  setAttr('homeBtn','aria-label',T('aria_inicio')); setAttr('topBtn','aria-label',T('aria_arriba'));
+  setAttr('sel','aria-label',T('aria_seccion')); setAttr('clearBusca','aria-label',T('aria_limpar'));
+  document.getElementById('langBtn').textContent = LANG==='gl'?'ES':'GL';
+  document.getElementById('busca').setAttribute('placeholder',T('buscar_ph'));
+  // footer
+  setHtml('footTitulo',T('foot_titulo')); setHtml('footOficial',T('foot_oficial'));
+  setHtml('footFirma',T('foot_firma')); setHtml('footCreditos',T('foot_creditos'));
+  // landing lang botóns: marcar activo
+  document.getElementById('langGl').style.opacity=LANG==='gl'?'1':'.55';
+  document.getElementById('langEs').style.opacity=LANG==='es'?'1':'.55';
+  buildSelect();
+  render();
+}
+function setLang(l){
+  if(l!==LANG){LANG=l;try{localStorage.setItem(LS_LANG,l);}catch(e){}applyI18n();}
+}
+
+/* ================= UI ================= */
 const landing=document.getElementById('landing');
 const app=document.getElementById('app');
-function abrirPrograma(){
-  landing.classList.add('hide');
-  setTimeout(()=>{landing.style.display='none';},450);
-  app.classList.add('show');
-  window.scrollTo(0,0);
-}
-function volverCartel(){
-  landing.style.display='flex';
-  requestAnimationFrame(()=>landing.classList.remove('hide'));
-  app.classList.remove('show');
-  window.scrollTo(0,0);
-}
+const sel=document.getElementById('sel');
+const busca=document.getElementById('busca');
+const clearBusca=document.getElementById('clearBusca');
+
+function abrirPrograma(){landing.classList.add('hide');setTimeout(()=>{landing.style.display='none';},450);app.classList.add('show');window.scrollTo(0,0);}
+function volverCartel(){landing.style.display='flex';requestAnimationFrame(()=>landing.classList.remove('hide'));app.classList.remove('show');window.scrollTo(0,0);}
 document.getElementById('verPrograma').addEventListener('click',abrirPrograma);
 document.getElementById('homeBtn').addEventListener('click',volverCartel);
 
-document.getElementById('themeBtn').addEventListener('click',()=>{
-  applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
-});
+document.getElementById('langGl').addEventListener('click',()=>setLang('gl'));
+document.getElementById('langEs').addEventListener('click',()=>setLang('es'));
+document.getElementById('langBtn').addEventListener('click',()=>setLang(LANG==='gl'?'es':'gl'));
+document.getElementById('themeBtn').addEventListener('click',()=>{applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');});
 
-const sel=document.getElementById('sel');
 sel.addEventListener('change',()=>{
   state.mode=sel.value;
-  // limpar busca ao cambiar de sección
-  const busca=document.getElementById('busca');
-  busca.value='';state.q='';document.getElementById('clearBusca').classList.remove('show');
-  render();
-  window.scrollTo({top:0,behavior:'smooth'});
+  busca.value='';state.q='';clearBusca.classList.remove('show');
+  render();window.scrollTo({top:0,behavior:'smooth'});
 });
-
-const busca=document.getElementById('busca');
-const clearBusca=document.getElementById('clearBusca');
-busca.addEventListener('input',()=>{
-  state.q=busca.value;
-  clearBusca.classList.toggle('show',!!busca.value);
-  render();
-});
-clearBusca.addEventListener('click',()=>{
-  busca.value='';state.q='';clearBusca.classList.remove('show');busca.focus();render();
-});
+busca.addEventListener('input',()=>{state.q=busca.value;clearBusca.classList.toggle('show',!!busca.value);render();});
+clearBusca.addEventListener('click',()=>{busca.value='';state.q='';clearBusca.classList.remove('show');busca.focus();render();});
 
 document.getElementById('contido').addEventListener('click',e=>{
-  const fav=e.target.closest('[data-fav]');
-  if(fav){toggleFav(fav.dataset.fav);return;}
-  const cal=e.target.closest('[data-cal]');
-  if(cal){descargarICS(cal.dataset.cal);return;}
-  const sh=e.target.closest('[data-share]');
-  if(sh){compartir(sh.dataset.share);return;}
+  const fav=e.target.closest('[data-fav]'); if(fav){toggleFav(fav.dataset.fav);return;}
+  const cal=e.target.closest('[data-cal]'); if(cal){descargarICS(cal.dataset.cal);return;}
+  const sh=e.target.closest('[data-share]'); if(sh){compartir(sh.dataset.share);return;}
 });
 
 const topBtn=document.getElementById('topBtn');
 window.addEventListener('scroll',()=>{topBtn.classList.toggle('show',window.scrollY>500&&app.classList.contains('show'));});
 topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
-/* ================= PWA: SERVICE WORKER ================= */
+/* ================= PWA: SW + AUTO-ACTUALIZACIÓN ================= */
 if('serviceWorker' in navigator){
+  let refreshing=false;
+  const hadController=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    // Só recargamos cando se actualiza unha versión xa existente (non na 1ª instalación)
+    if(hadController && !refreshing){refreshing=true;toast(T('toast_update'));setTimeout(()=>location.reload(),700);}
+  });
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
+    navigator.serviceWorker.register('sw.js').then(reg=>{
+      // comprobar actualizacións ao abrir e periodicamente
+      reg.update();
+      setInterval(()=>reg.update(),60*60*1000);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)reg.update();});
+    }).catch(()=>{});
   });
 }
 
 /* ================= PWA: INSTALAR ================= */
 let deferredPrompt=null;
 const btnInstalar=document.getElementById('btnInstalar');
-window.addEventListener('beforeinstallprompt',(e)=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  btnInstalar.classList.add('show');
-});
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;btnInstalar.classList.add('show');});
 btnInstalar.addEventListener('click',async()=>{
   if(!deferredPrompt) return;
   deferredPrompt.prompt();
   const {outcome}=await deferredPrompt.userChoice;
-  deferredPrompt=null;
-  btnInstalar.classList.remove('show');
-  if(outcome==='accepted') toast('Instalando a app… 🎉');
+  deferredPrompt=null;btnInstalar.classList.remove('show');
+  if(outcome==='accepted') toast(T('toast_install'));
 });
-window.addEventListener('appinstalled',()=>{
-  btnInstalar.classList.remove('show');
-  toast('App instalada! Xa a tes na pantalla de inicio 📲');
-});
-// se xa está instalada (standalone), agochar botón
-if(window.matchMedia('(display-mode: standalone)').matches || navigator.standalone){
-  btnInstalar.classList.remove('show');
-}
+window.addEventListener('appinstalled',()=>{btnInstalar.classList.remove('show');toast(T('toast_installed'));});
+if(window.matchMedia('(display-mode: standalone)').matches || navigator.standalone){btnInstalar.classList.remove('show');}
 
-/* ================= DEEP LINK (#dia/idEvento) ================= */
+/* ================= DEEP LINK ================= */
 function aplicarHash(){
-  const h=location.hash.replace(/^#/,'');
-  if(!h) return false;
+  const h=location.hash.replace(/^#/,''); if(!h) return false;
   const [seccion,evId]=h.split('/');
   const validas=['favoritos','permanente','mer','xov','ven','sab','dom'];
   if(!validas.includes(seccion)) return false;
   abrirPrograma();
-  sel.value=seccion; state.mode=seccion; state.q=''; busca.value='';
-  document.getElementById('clearBusca').classList.remove('show');
+  sel.value=seccion;state.mode=seccion;state.q='';busca.value='';clearBusca.classList.remove('show');
   render();
-  if(evId){
-    setTimeout(()=>{
-      const el=document.querySelector('.evento[data-id="'+CSS.escape(evId)+'"]');
-      if(el){
-        el.scrollIntoView({behavior:'smooth',block:'center'});
-        el.style.transition='box-shadow .3s';
-        el.style.boxShadow='0 0 0 3px var(--amarelo), var(--sombra)';
-        setTimeout(()=>{el.style.boxShadow='';},2200);
-      }
-    },120);
-  }
+  if(evId){setTimeout(()=>{
+    const el=document.querySelector('.evento[data-id="'+CSS.escape(evId)+'"]');
+    if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.transition='box-shadow .3s';el.style.boxShadow='0 0 0 3px var(--amarelo), var(--sombra)';setTimeout(()=>{el.style.boxShadow='';},2200);}
+  },120);}
   return true;
 }
 window.addEventListener('hashchange',aplicarHash);
 
-/* ================= REFRESCO "EN DIRECTO" ================= */
-// Reavalía periodicamente o estado en directo (cada 60 s)
-setInterval(()=>{
-  if(app.classList.contains('show')) render();
-},60000);
+/* ================= REFRESCO EN DIRECTO ================= */
+setInterval(()=>{if(app.classList.contains('show'))render();},60000);
 
 /* ================= INIT ================= */
-updateFavOption();
-render();
-// se hai enlace directo a un evento, ábreo
+applyI18n();
 aplicarHash();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a091680c498f2183',t:'MTc4MTAyMTQyNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
