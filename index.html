@@ -220,14 +220,14 @@
   .dia-dot.on{background:var(--amarelo);transform:scale(1.35)}
   .dia-nav .hint{font-size:.74rem;color:var(--footer-soft);width:100%;text-align:center;margin-top:2px}
 
-  /* zona deslizable */
-  #contido.swiping{touch-action:pan-y}
-  .slide-anim{animation:slideIn .28s ease}
-  @keyframes slideIn{from{opacity:.3}to{opacity:1}}
-  .slide-left{animation:slL .28s ease}
-  .slide-right{animation:slR .28s ease}
-  @keyframes slL{from{opacity:.2;transform:translateX(28px)}to{opacity:1;transform:none}}
-  @keyframes slR{from{opacity:.2;transform:translateX(-28px)}to{opacity:1;transform:none}}
+  /* carrusel de días (asoma o veciño ao deslizar) */
+  .swipe-viewport{position:relative;overflow:hidden;touch-action:pan-y;margin:0 -10px;padding:0 10px}
+  .swipe-track{position:relative;transform:translateX(0);will-change:transform}
+  .swipe-track.animating{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .swipe-panel{width:100%}
+  .swipe-panel.cur{position:relative}
+  .swipe-panel.prev{position:absolute;top:0;right:calc(100% + 20px);width:100%}
+  .swipe-panel.next{position:absolute;top:0;left:calc(100% + 20px);width:100%}
 
   /* flechas laterais (aproveitan os ocos en pantallas anchas) */
   .dia-arrow{
@@ -519,7 +519,7 @@ const I18N={
     aria_pechar:'Pechar',
     net_offline:'📴 Sen conexión · vendo a versión gardada', net_online:'✅ Conexión recuperada', net_offline_short:'Sen conexión',
     swipe_hint:'Desliza ou usa as frechas para cambiar de día',
-    perm_toggle:'Amosar as actividades de toda a festa en cada día',
+    perm_toggle:'Amosar as actividades permanentes en cada día',
     filtro_todos:'Todos', filtro_vacio_h:'Nada deste tipo', filtro_vacio_p:'Non hai eventos deste tipo nesta sección. Proba con outro filtro.',
     count_falta:'Falta', count_faltan:'Faltan', count_dias:'días', count_dia:'día', count_hoxe:'É hoxe!', count_festa:'🎉 Felices festas!',
     compartir_app:'↗ Compartir a app', share_app_text:'Programa das Festas de Ourense 2026 (17–21 xuño). Toda a programación no móbil:',
@@ -559,7 +559,7 @@ const I18N={
     aria_pechar:'Cerrar',
     net_offline:'📴 Sin conexión · viendo la versión guardada', net_online:'✅ Conexión recuperada', net_offline_short:'Sin conexión',
     swipe_hint:'Desliza o usa las flechas para cambiar de día',
-    perm_toggle:'Mostrar las actividades de toda la fiesta en cada día',
+    perm_toggle:'Mostrar las actividades permanentes en cada día',
     filtro_todos:'Todos', filtro_vacio_h:'Nada de este tipo', filtro_vacio_p:'No hay eventos de este tipo en esta sección. Prueba con otro filtro.',
     count_falta:'Falta', count_faltan:'Faltan', count_dias:'días', count_dia:'día', count_hoxe:'¡Es hoy!', count_festa:'🎉 ¡Felices fiestas!',
     compartir_app:'↗ Compartir la app', share_app_text:'Programa de las Fiestas de Ourense 2026 (17–21 junio). Toda la programación en el móvil:',
@@ -690,6 +690,13 @@ function isLive(ev){
   return now>=dts.start && now<=dts.end;
 }
 
+// lista base dun día concreto (coas permanentes ao inicio se procede)
+function listaDoDia(diaId){
+  const perms=ALL_EVENTS.filter(e=>e.diaId==='permanente');
+  const doDia=ALL_EVENTS.filter(e=>e.diaId===diaId);
+  // as permanentes son de todo o día -> primeiro
+  return PERM_EN_DIA ? perms.concat(doDia) : doDia;
+}
 function baseList(){
   if(state.q.trim()){
     const q=norm(state.q);
@@ -697,23 +704,32 @@ function baseList(){
   }
   if(state.mode==='favoritos') return ALL_EVENTS.filter(e=>FAVS.has(e.id));
   if(state.mode==='permanente') return ALL_EVENTS.filter(e=>e.diaId==='permanente');
-  // día concreto: opcionalmente engadir as permanentes ao final
-  const doDia=ALL_EVENTS.filter(e=>e.diaId===state.mode);
-  if(PERM_EN_DIA){
-    const perms=ALL_EVENTS.filter(e=>e.diaId==='permanente');
-    return doDia.concat(perms);
-  }
-  return doDia;
+  return listaDoDia(state.mode);
 }
-function currentList(){
-  let list=baseList();
-  if(state.tipo && state.tipo!=='todos') list=list.filter(e=>e.tipo===state.tipo);
+function aplicarTipo(list){
+  if(state.tipo && state.tipo!=='todos') return list.filter(e=>e.tipo===state.tipo);
   return list;
 }
+function currentList(){return aplicarTipo(baseList());}
 // tipos presentes na vista actual (para amosar só os filtros relevantes)
 function tiposNaVista(){
   const set=new Set(baseList().map(e=>e.tipo));
   return ['musica','espectaculo','deporte','infantil','permanente'].filter(t=>set.has(t));
+}
+
+// contido completo dun día (título + datos + eventos), usado en cada panel do carrusel
+function diaPanelHTML(diaId){
+  const d=DIA_INFO[diaId];
+  const list=aplicarTipo(listaDoDia(diaId));
+  let cuerpo;
+  if(!list.length){
+    cuerpo=`<div class="empty"><span class="big">🔎</span><h3>${T('filtro_vacio_h')}</h3><p>${T('filtro_vacio_p')}</p></div>`;
+  } else {
+    cuerpo=list.map(e=>eventoHTML(e,false)).join('');
+  }
+  return `<div class="seccion-titulo"><span class="em">🎉</span><h2>${tr(d.nome)}</h2><span class="liña"></span></div>
+          <div class="dia-data">${tr(d.nome)}, ${d.num} ${T('de_mes')}<small>${list.length} ${T('actividades')}</small></div>
+          ${cuerpo}`;
 }
 
 function render(){
@@ -722,6 +738,26 @@ function render(){
   const base=baseList();
   const list=currentList();
   const showDia=searching||state.mode==='favoritos';
+
+  // ---- MODO DÍA: carrusel deslizable (asoma o veciño) ----
+  if(esDiaNavegable()){
+    const prevId=diaVecino(-1), nextId=diaVecino(1);
+    const prevPanel=prevId?`<section class="swipe-panel prev">${diaPanelHTML(prevId)}</section>`:'';
+    const nextPanel=nextId?`<section class="swipe-panel next">${diaPanelHTML(nextId)}</section>`:'';
+    main.innerHTML=`${diaNavHTML()}
+      <div class="swipe-viewport" id="swipeVp">
+        <div class="swipe-track" id="swipeTrack">
+          ${prevPanel}
+          <section class="swipe-panel cur">${diaPanelHTML(state.mode)}</section>
+          ${nextPanel}
+        </div>
+      </div>`;
+    buildFiltros();
+    actualizarFlechas();
+    return;
+  }
+
+  // ---- RESTO DE VISTAS (busca, favoritos, permanentes) ----
   let head='';
   if(searching){
     head=`<div class="seccion-titulo"><span class="em">🔍</span><h2>${T('sec_resultados')}</h2><span class="liña"></span></div>`;
@@ -732,15 +768,9 @@ function render(){
   } else if(state.mode==='permanente'){
     head=`<div class="seccion-titulo"><span class="em">🎪</span><h2>${T('sec_permanente')}</h2><span class="liña"></span></div>
           <div class="info-banner"><h3>${T('banner_h')}</h3><p>${T('banner_p')}</p></div>`;
-  } else {
-    const d=DIA_INFO[state.mode];
-    head=`<div class="seccion-titulo"><span class="em">🎉</span><h2>${tr(d.nome)}</h2><span class="liña"></span></div>
-          ${diaNavHTML()}
-          <div class="dia-data">${tr(d.nome)}, ${d.num} ${T('de_mes')}<small>${list.length} ${T('actividades')}</small></div>`;
   }
   let cuerpo;
   if(!list.length){
-    // hai eventos pero ningún do tipo filtrado
     cuerpo=`<div class="empty"><span class="big">🔎</span><h3>${T('filtro_vacio_h')}</h3><p>${T('filtro_vacio_p')}</p></div>`;
   } else {
     cuerpo=list.map(e=>eventoHTML(e,showDia)).join('');
@@ -779,15 +809,33 @@ function diaNavHTML(){
 }
 
 function esDiaNavegable(){return DIA_ORDER.includes(state.mode) && !state.q.trim();}
+
+// cambia de día con animación de carrusel (desprazando o track ata o veciño)
 function irADia(id,dir){
   if(!DIA_ORDER.includes(id)) return;
+  const track=document.getElementById('swipeTrack');
+  if(track && (dir==='next'||dir==='prev')){
+    const vp=document.getElementById('swipeVp');
+    const w=vp?vp.clientWidth:window.innerWidth;
+    track.classList.add('animating');
+    track.style.transform=`translateX(${dir==='next'?-w:w}px)`;
+    let feito=false;
+    const fin=()=>{
+      if(feito) return; feito=true;
+      track.removeEventListener('transitionend',fin);
+      cambiarDiaInstantaneo(id);
+    };
+    track.addEventListener('transitionend',fin);
+    setTimeout(fin,360); // fallback se non dispara transitionend
+    return;
+  }
+  cambiarDiaInstantaneo(id);
+}
+function cambiarDiaInstantaneo(id){
   state.mode=id; sel.value=id; state.tipo='todos';
   busca.value='';state.q='';clearBusca.classList.remove('show');
   render();
-  const cont=document.getElementById('contido');
-  cont.classList.remove('slide-left','slide-right','slide-anim');
-  void cont.offsetWidth; // reiniciar animación
-  cont.classList.add(dir==='next'?'slide-left':dir==='prev'?'slide-right':'slide-anim');
+  // levar arriba o scroll vertical (sen scroll horizontal ningún)
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function diaVecino(paso){
@@ -1071,24 +1119,67 @@ contido.addEventListener('click',e=>{
   if(dot){const id=dot.dataset.godia;if(id!==state.mode){const dir=DIA_ORDER.indexOf(id)>DIA_ORDER.indexOf(state.mode)?'next':'prev';irADia(id,dir);}return;}
 });
 
-/* ================= SWIPE TÁCTIL (cambiar de día) ================= */
+/* ================= SWIPE TÁCTIL (carrusel que segue ao dedo) ================= */
 (function(){
-  let x0=null,y0=null,t0=0,tracking=false;
+  let x0=null,y0=null,t0=0,track=null,w=0;
+  let horizontal=null; // null=sen decidir, true=horizontal, false=vertical
+  let hasPrev=false,hasNext=false;
+
+  function resist(dx){
+    // resistencia se non hai veciño nese sentido
+    if(dx>0 && !hasPrev) return dx*0.28;
+    if(dx<0 && !hasNext) return dx*0.28;
+    return dx;
+  }
+
   contido.addEventListener('touchstart',(e)=>{
-    if(!esDiaNavegable()||e.touches.length!==1){tracking=false;return;}
-    const t=e.touches[0]; x0=t.clientX; y0=t.clientY; t0=Date.now(); tracking=true;
+    horizontal=null; track=null;
+    if(!esDiaNavegable()||e.touches.length!==1) return;
+    track=document.getElementById('swipeTrack');
+    if(!track) return;
+    const vp=document.getElementById('swipeVp'); w=vp?vp.clientWidth:window.innerWidth;
+    hasPrev=diaVecino(-1)!==null; hasNext=diaVecino(1)!==null;
+    const t=e.touches[0]; x0=t.clientX; y0=t.clientY; t0=Date.now();
+    track.classList.remove('animating');
   },{passive:true});
-  contido.addEventListener('touchend',(e)=>{
-    if(!tracking||x0===null) return; tracking=false;
-    const t=e.changedTouches[0];
-    const dx=t.clientX-x0, dy=t.clientY-y0, dt=Date.now()-t0;
-    // xesto horizontal claro: rápido e máis horizontal que vertical
-    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.6 && dt<700){
-      if(dx<0){const d=diaVecino(1);if(d)irADia(d,'next');}
-      else{const d=diaVecino(-1);if(d)irADia(d,'prev');}
+
+  contido.addEventListener('touchmove',(e)=>{
+    if(track===null||x0===null||e.touches.length!==1) return;
+    const t=e.touches[0];
+    const dx=t.clientX-x0, dy=t.clientY-y0;
+    if(horizontal===null){
+      if(Math.abs(dx)>8||Math.abs(dy)>8) horizontal=Math.abs(dx)>Math.abs(dy);
     }
-    x0=y0=null;
-  },{passive:true});
+    if(horizontal){
+      e.preventDefault(); // evitamos scroll vertical mentres arrastramos lateral
+      track.style.transform=`translateX(${resist(dx)}px)`;
+    }
+  },{passive:false});
+
+  function soltar(e){
+    if(track===null||x0===null){x0=y0=null;return;}
+    const t=(e.changedTouches&&e.changedTouches[0])||null;
+    const dx=t?t.clientX-x0:0, dt=Date.now()-t0;
+    const tk=track; track=null; x0=y0=null;
+    if(!horizontal){tk.style.transform='';return;}
+    const umbral=Math.min(w*0.32,120);
+    const rapido=Math.abs(dx)>50 && dt<300;
+    let dir=null;
+    if((dx<=-umbral||(rapido&&dx<0)) && hasNext) dir='next';
+    else if((dx>=umbral||(rapido&&dx>0)) && hasPrev) dir='prev';
+    if(dir){
+      const d=diaVecino(dir==='next'?1:-1);
+      if(d){irADia(d,dir);return;}
+    }
+    // volver á posición orixinal
+    tk.classList.add('animating');
+    tk.style.transform='translateX(0)';
+    const limpa=()=>{tk.classList.remove('animating');tk.removeEventListener('transitionend',limpa);};
+    tk.addEventListener('transitionend',limpa);
+    setTimeout(limpa,360);
+  }
+  contido.addEventListener('touchend',soltar,{passive:true});
+  contido.addEventListener('touchcancel',soltar,{passive:true});
 })();
 
 const topBtn=document.getElementById('topBtn');
@@ -1229,5 +1320,5 @@ document.getElementById('btnCompartirApp').addEventListener('click',compartirApp
   actualizarRede();
 })();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a09244516fee1527',t:'MTc4MTAzMDQ0OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
