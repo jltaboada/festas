@@ -1,0 +1,20 @@
+{
+  "name": "Festas de Ourense 2026",
+  "short_name": "Festas '26",
+  "description": "Programa non oficial das Festas de Ourense 2026 (17–21 de xuño): concertos, espectáculos, atraccións, favoritos, calendario e mapas.",
+  "lang": "gl",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06204c",
+  "theme_color": "#0a2a5e",
+  "categories": ["events", "lifestyle", "entertainment"],
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "img/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
