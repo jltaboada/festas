@@ -214,11 +214,11 @@
   .filtro-opt .nm{flex:1;font-weight:700;color:var(--texto)}
   .filtro-opt .ck{
     flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:2px solid #c2ccdf;display:grid;place-items:center;
-    color:#fff;font-size:.85rem;transition:all .15s;
+    color:transparent;font-size:.85rem;font-weight:800;transition:all .15s;
   }
   .filtro-opt input{position:absolute;opacity:0;width:0;height:0}
-  .filtro-opt input:checked + .ck{background:var(--turquesa);border-color:var(--turquesa)}
-  .filtro-opt input:not(:checked) + .ck{color:transparent}
+  .filtro-opt:has(input:checked){border-color:var(--turquesa);background:rgba(55,201,184,.12)}
+  .filtro-opt input:checked ~ .ck{background:var(--turquesa);border-color:var(--turquesa);color:#fff}
   .modal-btn.ghost{background:transparent;border-color:#cfd6e6;color:var(--texto)}
   [data-theme="dark"] .modal-btn.ghost{border-color:rgba(255,255,255,.2)}
 
@@ -558,7 +558,7 @@ const I18N={
     toast_cal:'Evento listo para o teu calendario 📅', toast_copy:'Copiado ao portapapeis 📋',
     toast_install:'Instalando a app… 🎉', toast_installed:'App instalada! Xa a tes na pantalla de inicio 📲',
     toast_update:'App actualizada á última versión ✨',
-    prompt_share:'Copia e comparte este evento:', share_festa:'Festas de Ourense 2026 · 17–21 xuño', share_toda:'Toda a festa',
+    prompt_share:'Copia e comparte este evento:', share_festa:'Festas de Ourense 2026 · 17–21 xuño', share_toda:'Todos os días',
     foot_titulo:'<strong>Festas de Ourense 2026</strong> · 17–21 de xuño',
     foot_oficial:'Programa oficial (PDF) en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal ↗</a>',
     foot_firma:'🎆 Un proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">José Luis Taboada</a>',
@@ -598,7 +598,7 @@ const I18N={
     toast_cal:'Evento listo para tu calendario 📅', toast_copy:'Copiado al portapapeles 📋',
     toast_install:'Instalando la app… 🎉', toast_installed:'¡App instalada! Ya la tienes en la pantalla de inicio 📲',
     toast_update:'App actualizada a la última versión ✨',
-    prompt_share:'Copia y comparte este evento:', share_festa:'Fiestas de Ourense 2026 · 17–21 junio', share_toda:'Toda la fiesta',
+    prompt_share:'Copia y comparte este evento:', share_festa:'Fiestas de Ourense 2026 · 17–21 junio', share_toda:'Todos los días',
     foot_titulo:'<strong>Fiestas de Ourense 2026</strong> · 17–21 de junio',
     foot_oficial:'Programa oficial (PDF) en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal ↗</a>',
     foot_firma:'🎆 Un proyecto personal de <a href="https://jltaboada.com" target="_blank" rel="noopener">José Luis Taboada</a>',
@@ -626,7 +626,7 @@ const TIPOS={
   espectaculo:{tag:{gl:'Espectáculo',es:'Espectáculo'},ic:'🎆'},
   deporte:{tag:{gl:'Deporte',es:'Deporte'},ic:'🏅'},
   infantil:{tag:{gl:'Infantil',es:'Infantil'},ic:'🎈'},
-  permanente:{tag:{gl:'Toda a festa',es:'Toda la fiesta'},ic:'⭐'}
+  permanente:{tag:{gl:'Todos os días',es:'Todos los días'},ic:'⭐'}
 };
 const DIA_DATE={mer:'20260617',xov:'20260618',ven:'20260619',sab:'20260620',dom:'20260621'};
 const DIA_INFO={
@@ -696,7 +696,8 @@ function eventoHTML(ev,showDia){
   if(lugar) chips+=`<span class="chip lugar">📍 ${esc(lugar)}</span>`;
   const detalle=detalleTxt?`<div class="ev-detalle">${detalleTxt}</div>`:'';
   const liveBadge=live?`<div class="ev-live"><span class="dot"></span>${T('en_directo')}</div>`:'';
-  const cal=(ev.baseYmd&&ev.hora)?`<button class="acc-btn cal" data-cal="${ev.id}" aria-label="${T('t_cal')}" title="${T('t_cal')}">${SVG.cal}</button>`:'';
+  const podeCal=(ev.baseYmd&&ev.hora)||ev.diaId==='permanente';
+  const cal=podeCal?`<button class="acc-btn cal" data-cal="${ev.id}" aria-label="${T('t_cal')}" title="${T('t_cal')}">${SVG.cal}</button>`:'';
   const mapa=lugar?`<a class="acc-btn mapa" href="${mapsUrl(lugar)}" target="_blank" rel="noopener" aria-label="${T('t_mapa')}" title="${T('t_mapa')}">${SVG.mapa}</a>`:'';
   const share=`<button class="acc-btn share" data-share="${ev.id}" aria-label="${T('t_share')}" title="${T('t_share')}">${SVG.share}</button>`;
   return `<article class="evento tipo-${ev.tipo}${live?' is-live':''}" data-id="${ev.id}">
@@ -742,10 +743,16 @@ function aplicarTipo(list){
   return list;
 }
 function currentList(){return aplicarTipo(baseList());}
-// tipos presentes na vista actual (para amosar só os filtros relevantes)
+const ORDE_TIPOS=['musica','espectaculo','deporte','infantil','permanente'];
+// tipos presentes na vista actual (para decidir se amosar o botón de filtro)
 function tiposNaVista(){
   const set=new Set(baseList().map(e=>e.tipo));
-  return ['musica','espectaculo','deporte','infantil','permanente'].filter(t=>set.has(t));
+  return ORDE_TIPOS.filter(t=>set.has(t));
+}
+// todos os tipos que existen en todo o programa (para o modal de filtros)
+function tiposDoProgramaTodo(){
+  const set=new Set(ALL_EVENTS.map(e=>e.tipo));
+  return ORDE_TIPOS.filter(t=>set.has(t));
 }
 
 // contido completo dun día (título + datos + eventos), usado en cada panel do carrusel
@@ -815,8 +822,8 @@ function render(){
 function buildFiltros(){
   const btn=document.getElementById('filtroBtn'), badge=document.getElementById('filtroBadge');
   if(!btn||!badge) return;
-  // o filtro só se amosa nas vistas con variedade de tipos (días e permanentes)
-  const dispo=tiposNaVista().length>=2;
+  // o filtro amósase nas vistas de día e permanentes (non en busca nin favoritos)
+  const dispo=!state.q.trim() && (DIA_ORDER.includes(state.mode) || state.mode==='permanente');
   btn.style.display=dispo?'grid':'none';
   const n=state.tipos.size;
   btn.classList.toggle('activo',n>0);
@@ -896,8 +903,15 @@ function toggleFav(id){
 }
 
 /* ================= CALENDARIO ================= */
+const PERM_INI='20260617', PERM_FIN='20260621'; // permanentes: do 17 ao 21 (eventos de todo o día)
 function mkDate(ymd,h,m){return new Date(+ymd.slice(0,4),+ymd.slice(4,6)-1,+ymd.slice(6,8),h,m);}
 function horaToDates(ev){
+  // permanentes -> evento de todo o día, varios días (17-21)
+  if(ev.diaId==='permanente'){
+    const start=mkDate(PERM_INI,0,0);
+    const end=mkDate(PERM_FIN,0,0); end.setDate(end.getDate()+1); // DTEND exclusivo
+    return {start,end,allDay:true};
+  }
   const times=(ev.hora||'').match(/(\d{1,2})\.(\d{2})/g)||[];
   if(!times.length||!ev.baseYmd) return null;
   const [sh,sm]=times[0].split('.').map(Number);
@@ -911,27 +925,41 @@ function p2(n){return String(n).padStart(2,'0');}
 function fmtLocal(d){return d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+'T'+p2(d.getHours())+p2(d.getMinutes())+'00';}
 function fmtUTC(d){return d.getUTCFullYear()+p2(d.getUTCMonth()+1)+p2(d.getUTCDate())+'T'+p2(d.getUTCHours())+p2(d.getUTCMinutes())+p2(d.getUTCSeconds())+'Z';}
 function icsEsc(s){return (s||'').replace(/\\/g,'\\\\').replace(/,/g,'\\,').replace(/;/g,'\\;').replace(/\n/g,'\\n');}
-function fmtGoogle(d){return fmtLocal(d).replace('T','T');} // mesmo formato local YYYYMMDDTHHMMSS
+function fmtDay(d){return d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate());} // YYYYMMDD (all-day)
 
 function buildICS(ev,dts){
   const lugar=tr(ev.lugar);
   const loc=lugar?lugar+', Ourense':'Ourense';
+  const ds = dts.allDay ? 'DTSTART;VALUE=DATE:'+fmtDay(dts.start) : 'DTSTART:'+fmtLocal(dts.start);
+  const de = dts.allDay ? 'DTEND;VALUE=DATE:'+fmtDay(dts.end)     : 'DTEND:'+fmtLocal(dts.end);
+  // nas permanentes, o horario detallado vai na descrición
+  let desc=T('cal_desc');
+  if(ev.diaId==='permanente'){
+    const det=(tr(ev.detalle)||'').replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'');
+    if(det) desc=det+' — '+desc;
+  }
   return [
     'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//jltaboada//Festas Ourense 2026//'+LANG.toUpperCase(),'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT','UID:'+ev.id+'@festasourense2026','DTSTAMP:'+fmtUTC(new Date()),
-    'DTSTART:'+fmtLocal(dts.start),'DTEND:'+fmtLocal(dts.end),
-    'SUMMARY:'+icsEsc(tr(ev.titulo)),'LOCATION:'+icsEsc(loc),'DESCRIPTION:'+icsEsc(T('cal_desc')),
+    ds,de,
+    'SUMMARY:'+icsEsc(tr(ev.titulo)),'LOCATION:'+icsEsc(loc),'DESCRIPTION:'+icsEsc(desc),
     'END:VEVENT','END:VCALENDAR'
   ].join('\r\n');
 }
 function googleCalUrl(ev,dts){
   const lugar=tr(ev.lugar);
   const loc=lugar?lugar+', Ourense, España':'Ourense, España';
+  let desc=T('cal_desc');
+  if(ev.diaId==='permanente'){
+    const det=(tr(ev.detalle)||'').replace(/<br\s*\/?>/gi,' ').replace(/<[^>]+>/g,'');
+    if(det) desc=det+' — '+desc;
+  }
+  const dates = dts.allDay ? fmtDay(dts.start)+'/'+fmtDay(dts.end) : fmtLocal(dts.start)+'/'+fmtLocal(dts.end);
   const params=new URLSearchParams({
     action:'TEMPLATE',
     text:tr(ev.titulo),
-    dates:fmtGoogle(dts.start)+'/'+fmtGoogle(dts.end),
-    details:T('cal_desc'),
+    dates:dates,
+    details:desc,
     location:loc
   });
   return 'https://calendar.google.com/calendar/render?'+params.toString();
@@ -952,7 +980,16 @@ function fmtRango(dts){
               es:['domingo','lunes','martes','miércoles','jueves','viernes','sábado']};
   const meses={gl:['xan','feb','mar','abr','maio','xuño','xullo','ago','set','out','nov','dec'],
                es:['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']};
-  const s=dts.start,e=dts.end;
+  const s=dts.start;
+  if(dts.allDay){
+    // evento de todo o día, varios días: DTEND é exclusivo -> restar 1 día para amosar
+    const eIncl=new Date(dts.end); eIncl.setDate(eIncl.getDate()-1);
+    const ini=`${s.getDate()} ${meses[LANG][s.getMonth()]}`;
+    const fin=`${eIncl.getDate()} ${meses[LANG][eIncl.getMonth()]}`;
+    const todoDia=LANG==='es'?'Todo el día':'Todo o día';
+    return `${todoDia} · ${ini} – ${fin}`;
+  }
+  const e=dts.end;
   const diaSem=dias[LANG][s.getDay()];
   const fecha=`${s.getDate()} ${meses[LANG][s.getMonth()]}`;
   const hi=p2(s.getHours())+':'+p2(s.getMinutes());
@@ -1119,8 +1156,8 @@ document.getElementById('permToggle').addEventListener('change',(e)=>{
 /* ===== MODAL DE FILTROS ===== */
 let filtroTemp=new Set();
 function abrirModalFiltro(){
-  const tipos=tiposNaVista();
-  filtroTemp=new Set([...state.tipos].filter(t=>tipos.includes(t)));
+  const tipos=tiposDoProgramaTodo();
+  filtroTemp=new Set(state.tipos);
   const cont=document.getElementById('filtroLista');
   cont.innerHTML=tipos.map(t=>`
     <label class="filtro-opt">
@@ -1378,5 +1415,5 @@ document.getElementById('btnCompartirApp').addEventListener('click',compartirApp
   actualizarRede();
 })();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a09263488b830cdb',t:'MTc4MTAzMTcxNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
