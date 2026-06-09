@@ -4,7 +4,7 @@
    Sube este valor cada vez que cambies o contido (ou usa a data).
    Ao cambiar, o navegador detecta un sw.js distinto, instala a nova
    versión e a app recárgase soa amosando o contido máis actualizado. */
-const VERSION = '2026-06-09-5';
+const VERSION = '2026-06-09-6';
 const CACHE = 'festas-ourense-' + VERSION;
 
 const ASSETS = [
