@@ -9,12 +9,14 @@
 ## ✨ Características
 
 - 📱 **PWA instalable** (Android / iOS / escritorio) con icono propio, pantalla completa y modo *standalone*.
-- 🔌 **Funciona offline**: un *service worker* cachea la app y las imágenes.
+- 🔌 **Funciona 100% offline**: el *service worker* **precachea la app, las imágenes y `eventos.json`**
+  en la instalación, así que el programa se ve sin conexión. Avisa con un banner cuando estás offline.
 - 🪧 Pantalla de inicio con el **cartel** + botón "Ver programa" (y botón "Instalar a app").
 - 🗂️ **Desplegable** para elegir sección: ⭐ Favoritos · 📅 cada día (17–21) · 🎪 actividades permanentes.
 - ⭐ **Favoritos** guardados en el dispositivo (`localStorage`).
-- 📅 **Añadir al calendario** (.ics) en cada evento (Google/Apple/Outlook), con horas de madrugada bien resueltas.
-- 🗺️ **Ubicaciones en Google Maps** (chip de lugar + botón "Como chegar").
+- 📅 **Añadir al calendario** con un **modal**: muestra un resumen del evento y permite añadirlo a
+  **Google Calendar** (se abre en una pestaña) o **descargar el `.ics`** (Apple Calendar, Outlook, etc.).
+- 🗺️ **Botón "Cómo llegar"** que abre la ubicación en Google Maps / la app de mapas del dispositivo.
 - 🔴 **"En directo agora"**: marca automáticamente los eventos que están sucediendo según la fecha/hora.
 - ↗️ **Compartir evento** con la Web Share API (y copia al portapapeles como alternativa) + enlace directo (`#dia/evento`).
 - 🔍 **Buscador** por nombre, lugar o tipo (ignora acentos).
