@@ -78,18 +78,14 @@
   .land-deco.l{top:6px;left:-44px;transform:rotate(-8deg)}
   .land-deco.r{bottom:30px;right:-46px;transform:scaleX(-1) rotate(-6deg);width:130px}
   .land-lang{
-    position:absolute;top:calc(var(--safe-top) + 12px);right:14px;z-index:3;display:flex;gap:8px;
+    position:absolute;top:calc(var(--safe-top) + 12px);right:14px;z-index:3;
   }
   .land-lang button{
     cursor:pointer;border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.10);
-    color:#fff;font-family:inherit;font-weight:800;font-size:.8rem;padding:7px 12px;border-radius:999px;transition:transform .15s;
+    color:#fff;font-family:inherit;font-weight:800;font-size:.82rem;letter-spacing:.03em;
+    padding:8px 14px;border-radius:999px;transition:transform .15s;
   }
   .land-lang button:active{transform:scale(.92)}
-  .badge-no-oficial{
-    display:inline-block;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--azul);background:var(--amarelo);padding:5px 13px;border-radius:999px;
-    font-weight:800;margin-bottom:18px;box-shadow:0 3px 10px rgba(0,0,0,.3);position:relative;z-index:2;
-  }
   .cartel{
     max-width:330px;width:80%;border-radius:18px;display:block;margin:0 auto 24px;
     box-shadow:0 18px 48px rgba(0,0,0,.5);border:3px solid rgba(255,255,255,.85);position:relative;z-index:2;
@@ -204,8 +200,7 @@
   .chip{display:inline-flex;align-items:center;gap:5px;font-size:.77rem;font-weight:600;
     padding:4px 10px;border-radius:999px;white-space:nowrap;text-decoration:none}
   .chip.hora{background:#fff0d6;color:#9a6800}
-  .chip.lugar{background:#e7faf7;color:#0c7a6e;cursor:pointer;transition:background .15s;white-space:normal}
-  .chip.lugar:active{background:#cdf2ec}
+  .chip.lugar{background:#e7faf7;color:#0c7a6e;white-space:normal}
   .chip.dia{background:#eef0ff;color:#41499a}
   .chip.tipo{color:#fff}
   .chip.tipo.tipo-musica{background:var(--rosa)}
@@ -262,10 +257,61 @@
     box-shadow:0 6px 18px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;transform:translateY(10px)}
   .top-btn.show{opacity:1;pointer-events:auto;transform:none}
 
+  /* ============ MODAL CALENDARIO ============ */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:400;background:rgba(4,16,40,.62);
+    backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+    display:flex;align-items:flex-end;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .25s;
+    padding:0 0 calc(var(--safe-bot)) 0;
+  }
+  .modal-overlay.show{opacity:1;pointer-events:auto}
+  .modal{
+    position:relative;width:100%;max-width:460px;background:var(--card);color:var(--texto);
+    border-radius:24px 24px 0 0;padding:24px 20px calc(26px + var(--safe-bot));box-shadow:0 -10px 40px rgba(0,0,0,.4);
+    transform:translateY(40px);transition:transform .3s cubic-bezier(.2,.8,.2,1);text-align:center;
+  }
+  .modal-overlay.show .modal{transform:translateY(0)}
+  .modal-close{
+    position:absolute;top:14px;right:14px;border:none;background:var(--control-bg);color:var(--texto);
+    width:34px;height:34px;border-radius:50%;font-size:1rem;cursor:pointer;line-height:1;
+  }
+  .modal-ic{font-size:2.2rem;margin-bottom:4px}
+  .modal-h{font-size:1.05rem;color:var(--azul);margin-bottom:14px}
+  .modal-card{
+    background:#f4f7ff;border:1px solid #e3e9f7;border-radius:16px;padding:14px 16px;text-align:left;margin-bottom:18px;
+  }
+  [data-theme="light"] .modal-card{background:#f4f7ff}
+  .modal-evtit{font-size:1.12rem;font-weight:800;color:var(--azul);margin-bottom:8px;line-height:1.25}
+  .modal-linha{display:flex;gap:8px;align-items:flex-start;font-size:.9rem;color:#3a4660;margin-top:5px}
+  .modal-linha .mi{flex:0 0 auto}
+  .modal-acciones{display:flex;flex-direction:column;gap:10px}
+  .modal-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;
+    font-size:1rem;font-weight:700;height:52px;border-radius:14px;cursor:pointer;text-decoration:none;
+    border:1.5px solid transparent;transition:transform .12s, background .15s;
+  }
+  .modal-btn:active{transform:scale(.97)}
+  .modal-btn.google{background:#fff;color:#1a1a1a;border-color:#dadce0;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .modal-btn.ics{background:var(--azul);color:#fff}
+  .modal-pie{margin-top:14px;font-size:.74rem;color:var(--footer-soft);line-height:1.4}
+
+  /* banner de rede (offline / actualización) */
+  .net-banner{
+    position:fixed;left:50%;top:calc(var(--safe-top) + 10px);transform:translateX(-50%) translateY(-120%);
+    z-index:350;background:#1d3b6e;color:#fff;font-size:.84rem;font-weight:600;
+    padding:9px 18px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.35);
+    transition:transform .35s;max-width:92vw;text-align:center;
+  }
+  .net-banner.show{transform:translateX(-50%) translateY(0)}
+  .net-banner.offline{background:#7a4a12}
+
   @media(min-width:560px){
     #landing h1{font-size:3rem}
     #landing h1 .l2{font-size:1.9rem}
     .cartel{max-width:360px}
+    .modal-overlay{align-items:center;padding:20px}
+    .modal{border-radius:24px}
   }
 </style>
 </head>
@@ -274,12 +320,10 @@
 <!-- ============ LANDING ============ -->
 <section id="landing">
   <div class="land-lang">
-    <button id="langGl" aria-label="Galego">GL</button>
-    <button id="langEs" aria-label="Castellano">ES</button>
+    <button id="langBtnLand" aria-label="Cambiar idioma">ES</button>
   </div>
   <img src="img/fireworks2.png" alt="" class="land-deco l" aria-hidden="true">
   <img src="img/fireworks2.png" alt="" class="land-deco r" aria-hidden="true">
-  <span class="badge-no-oficial" id="badgeNoOficial">Programa non oficial</span>
   <img src="img/cartel.jpg" alt="Cartel das Festas de Ourense 2026" class="cartel">
   <h1><span class="l1" id="landH1a">Festas de</span><span class="l2" id="landH1b">Ourense 2026</span></h1>
   <div class="land-datas" id="landDatas">🗓️ Do 17 ao 21 de xuño</div>
@@ -329,6 +373,34 @@
 <button class="top-btn" id="topBtn" aria-label="Arriba">↑</button>
 <div id="toast" role="status" aria-live="polite"></div>
 
+<!-- ============ MODAL CALENDARIO ============ -->
+<div id="calModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="calModalTit">
+    <button class="modal-close" id="calClose" aria-label="Pechar">✕</button>
+    <div class="modal-ic">📅</div>
+    <h3 class="modal-h" id="calModalTit"></h3>
+    <div class="modal-card">
+      <div class="modal-evtit" id="calTitulo"></div>
+      <div class="modal-linha"><span class="mi">🕐</span><span id="calCuando"></span></div>
+      <div class="modal-linha" id="calLugar"><span class="mi">📍</span><span></span></div>
+    </div>
+    <div class="modal-acciones">
+      <a id="calGoogle" class="modal-btn google" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.2c0-.7-.06-1.4-.18-2.05H12v3.88h5.9a5.05 5.05 0 0 1-2.19 3.31v2.75h3.54c2.07-1.91 3.25-4.72 3.25-7.89z"/><path fill="#34A853" d="M12 23c2.95 0 5.43-.98 7.24-2.65l-3.54-2.75c-.98.66-2.24 1.05-3.7 1.05-2.84 0-5.25-1.92-6.11-4.5H2.23v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.89 14.15a6.6 6.6 0 0 1 0-4.3V7.01H2.23a11 11 0 0 0 0 9.98l3.66-2.84z"/><path fill="#EA4335" d="M12 5.35c1.6 0 3.04.55 4.18 1.63l3.13-3.13A11 11 0 0 0 12 1 11 11 0 0 0 2.23 7.01l3.66 2.84C6.75 7.27 9.16 5.35 12 5.35z"/></svg>
+        <span id="calGoogleTxt">Google Calendar</span>
+      </a>
+      <button id="calDescarga" class="modal-btn ics">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span id="calDescargaTxt"></span>
+      </button>
+    </div>
+    <p class="modal-pie" id="calPie"></p>
+  </div>
+</div>
+
+<!-- ============ AVISO OFFLINE / ACTUALIZACIÓN ============ -->
+<div id="netBanner" class="net-banner" role="status" aria-live="polite"></div>
+
 <script>
 /* ================= I18N ================= */
 const I18N={
@@ -352,6 +424,10 @@ const I18N={
     actividades:'actividades programadas', de_mes:'de xuño',
     en_directo:'En directo agora',
     t_cal:'Engadir ao calendario', t_mapa:'Como chegar', t_share:'Compartir', t_mapa_chip:'Abrir no mapa',
+    cal_modal_tit:'Engadir ao calendario', cal_google:'Google Calendar', cal_descarga:'Descargar (.ics)',
+    cal_pie:'Google Calendar abre nunha pestana. O ficheiro .ics serve para Apple Calendar, Outlook e outras apps.',
+    aria_pechar:'Pechar',
+    net_offline:'📴 Sen conexión · vendo a versión gardada', net_online:'✅ Conexión recuperada',
     toast_fav_add:'Gardado en favoritos ⭐', toast_fav_del:'Eliminado dos favoritos',
     toast_cal:'Evento listo para o teu calendario 📅', toast_copy:'Copiado ao portapapeis 📋',
     toast_install:'Instalando a app… 🎉', toast_installed:'App instalada! Xa a tes na pantalla de inicio 📲',
@@ -359,7 +435,7 @@ const I18N={
     prompt_share:'Copia e comparte este evento:', share_festa:'Festas de Ourense 2026 · 17–21 xuño', share_toda:'Toda a festa',
     foot_titulo:'<strong>Festas de Ourense 2026</strong> · 17–21 de xuño',
     foot_oficial:'Programa oficial (PDF) en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal ↗</a>',
-    foot_firma:'🎆 Un proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a>',
+    foot_firma:'🎆 Un proxecto persoal de <a href="https://jltaboada.com" target="_blank" rel="noopener">José Luis Taboada</a>',
     foot_creditos:'Esta web NON é unha aplicación oficial do Concello de Ourense.<br>Datos suxeitos a posibles cambios. Os favoritos gárdanse só no teu dispositivo.',
     cal_desc:'Festas de Ourense 2026 · Programa non oficial (jltaboada.com). Info oficial: ourense.gal'
   },
@@ -383,6 +459,10 @@ const I18N={
     actividades:'actividades programadas', de_mes:'de junio',
     en_directo:'En directo ahora',
     t_cal:'Añadir al calendario', t_mapa:'Cómo llegar', t_share:'Compartir', t_mapa_chip:'Abrir en el mapa',
+    cal_modal_tit:'Añadir al calendario', cal_google:'Google Calendar', cal_descarga:'Descargar (.ics)',
+    cal_pie:'Google Calendar se abre en una pestaña. El archivo .ics sirve para Apple Calendar, Outlook y otras apps.',
+    aria_pechar:'Cerrar',
+    net_offline:'📴 Sin conexión · viendo la versión guardada', net_online:'✅ Conexión recuperada',
     toast_fav_add:'Guardado en favoritos ⭐', toast_fav_del:'Eliminado de favoritos',
     toast_cal:'Evento listo para tu calendario 📅', toast_copy:'Copiado al portapapeles 📋',
     toast_install:'Instalando la app… 🎉', toast_installed:'¡App instalada! Ya la tienes en la pantalla de inicio 📲',
@@ -390,7 +470,7 @@ const I18N={
     prompt_share:'Copia y comparte este evento:', share_festa:'Fiestas de Ourense 2026 · 17–21 junio', share_toda:'Toda la fiesta',
     foot_titulo:'<strong>Fiestas de Ourense 2026</strong> · 17–21 de junio',
     foot_oficial:'Programa oficial (PDF) en <a href="https://ourense.gal/media/filer_public/a7/57/a7576ef6-337f-4a50-9065-f22492a409ab/festasourense2026programa.pdf" target="_blank" rel="noopener">ourense.gal ↗</a>',
-    foot_firma:'🎆 Un proyecto personal de <a href="https://jltaboada.com" target="_blank" rel="noopener">jltaboada.com</a>',
+    foot_firma:'🎆 Un proyecto personal de <a href="https://jltaboada.com" target="_blank" rel="noopener">José Luis Taboada</a>',
     foot_creditos:'Esta web NO es una aplicación oficial del Concello de Ourense.<br>Datos sujetos a posibles cambios. Los favoritos se guardan solo en tu dispositivo.',
     cal_desc:'Fiestas de Ourense 2026 · Programa no oficial (jltaboada.com). Info oficial: ourense.gal'
   }
@@ -444,16 +524,19 @@ function construirEventos(data){
 }
 
 async function cargarEventos(){
-  try{
-    // cache-busting suave: muda co despregamento (a app actualízase soa co SW)
-    const res=await fetch('eventos.json',{cache:'no-cache'});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data=await res.json();
-    ALL_EVENTS=construirEventos(data);
-  }catch(err){
-    console.error('Non se puido cargar eventos.json:',err);
-    ALL_EVENTS=[];
+  // 1º intento: rede (o SW tamén garda unha copia). 2º intento: caché do SW/navegador (offline).
+  for(const opts of [{cache:'no-cache'},{cache:'force-cache'},{}]){
+    try{
+      const res=await fetch('eventos.json',opts);
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const data=await res.json();
+      const lista=construirEventos(data);
+      if(lista.length){ ALL_EVENTS=lista; return true; }
+    }catch(err){ /* probar seguinte estratexia */ }
   }
+  console.error('Non se puido cargar eventos.json (nin rede nin caché).');
+  ALL_EVENTS=[];
+  return false;
 }
 
 /* ================= ESTADO ================= */
@@ -475,7 +558,7 @@ function eventoHTML(ev,showDia){
   let chips=`<span class="chip tipo tipo-${ev.tipo}">${t.ic} ${tag}</span>`;
   if(showDia && ev.diaId!=='permanente') chips+=`<span class="chip dia">📅 ${tr(ev.diaNome)} ${ev.diaNum}</span>`;
   if(ev.hora) chips+=`<span class="chip hora">🕐 ${ev.hora}</span>`;
-  if(lugar) chips+=`<a class="chip lugar" href="${mapsUrl(lugar)}" target="_blank" rel="noopener" title="${T('t_mapa_chip')}">📍 ${esc(lugar)} ↗</a>`;
+  if(lugar) chips+=`<span class="chip lugar">📍 ${esc(lugar)}</span>`;
   const detalle=detalleTxt?`<div class="ev-detalle">${detalleTxt}</div>`:'';
   const liveBadge=live?`<div class="ev-live"><span class="dot"></span>${T('en_directo')}</div>`:'';
   const cal=(ev.baseYmd&&ev.hora)?`<button class="acc-btn cal" data-cal="${ev.id}" aria-label="${T('t_cal')}" title="${T('t_cal')}">${SVG.cal}</button>`:'';
@@ -565,24 +648,74 @@ function p2(n){return String(n).padStart(2,'0');}
 function fmtLocal(d){return d.getFullYear()+p2(d.getMonth()+1)+p2(d.getDate())+'T'+p2(d.getHours())+p2(d.getMinutes())+'00';}
 function fmtUTC(d){return d.getUTCFullYear()+p2(d.getUTCMonth()+1)+p2(d.getUTCDate())+'T'+p2(d.getUTCHours())+p2(d.getUTCMinutes())+p2(d.getUTCSeconds())+'Z';}
 function icsEsc(s){return (s||'').replace(/\\/g,'\\\\').replace(/,/g,'\\,').replace(/;/g,'\\;').replace(/\n/g,'\\n');}
-function descargarICS(id){
-  const ev=ALL_EVENTS.find(e=>e.id===id); if(!ev) return;
-  const dts=horaToDates(ev); if(!dts) return;
+function fmtGoogle(d){return fmtLocal(d).replace('T','T');} // mesmo formato local YYYYMMDDTHHMMSS
+
+function buildICS(ev,dts){
   const lugar=tr(ev.lugar);
   const loc=lugar?lugar+', Ourense':'Ourense';
-  const ics=[
+  return [
     'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//jltaboada//Festas Ourense 2026//'+LANG.toUpperCase(),'CALSCALE:GREGORIAN',
-    'BEGIN:VEVENT','UID:'+id+'@festasourense2026','DTSTAMP:'+fmtUTC(new Date()),
+    'BEGIN:VEVENT','UID:'+ev.id+'@festasourense2026','DTSTAMP:'+fmtUTC(new Date()),
     'DTSTART:'+fmtLocal(dts.start),'DTEND:'+fmtLocal(dts.end),
     'SUMMARY:'+icsEsc(tr(ev.titulo)),'LOCATION:'+icsEsc(loc),'DESCRIPTION:'+icsEsc(T('cal_desc')),
     'END:VEVENT','END:VCALENDAR'
   ].join('\r\n');
+}
+function googleCalUrl(ev,dts){
+  const lugar=tr(ev.lugar);
+  const loc=lugar?lugar+', Ourense, España':'Ourense, España';
+  const params=new URLSearchParams({
+    action:'TEMPLATE',
+    text:tr(ev.titulo),
+    dates:fmtGoogle(dts.start)+'/'+fmtGoogle(dts.end),
+    details:T('cal_desc'),
+    location:loc
+  });
+  return 'https://calendar.google.com/calendar/render?'+params.toString();
+}
+function descargarICSEvento(ev,dts){
+  const ics=buildICS(ev,dts);
   const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='festas-ourense-'+id+'.ics';
+  const a=document.createElement('a'); a.href=url; a.download='festas-ourense-'+ev.id+'.ics';
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1500);
   toast(T('toast_cal'));
+}
+
+/* Modal de calendario */
+function fmtRango(dts){
+  const dias={gl:['domingo','luns','martes','mércores','xoves','venres','sábado'],
+              es:['domingo','lunes','martes','miércoles','jueves','viernes','sábado']};
+  const meses={gl:['xan','feb','mar','abr','maio','xuño','xullo','ago','set','out','nov','dec'],
+               es:['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']};
+  const s=dts.start,e=dts.end;
+  const diaSem=dias[LANG][s.getDay()];
+  const fecha=`${s.getDate()} ${meses[LANG][s.getMonth()]}`;
+  const hi=p2(s.getHours())+':'+p2(s.getMinutes());
+  const hf=p2(e.getHours())+':'+p2(e.getMinutes());
+  const mesmoDia=s.toDateString()===e.toDateString();
+  const finExtra=mesmoDia?'':` (${meses[LANG][e.getMonth()]} ${e.getDate()})`;
+  return `${diaSem.charAt(0).toUpperCase()+diaSem.slice(1)}, ${fecha} · ${hi} – ${hf}${finExtra}`;
+}
+let calEvActual=null, calDtsActual=null;
+function abrirModalCal(id){
+  const ev=ALL_EVENTS.find(e=>e.id===id); if(!ev) return;
+  const dts=horaToDates(ev); if(!dts) return;
+  calEvActual=ev; calDtsActual=dts;
+  const lugar=tr(ev.lugar);
+  document.getElementById('calTitulo').textContent=tr(ev.titulo);
+  document.getElementById('calCuando').textContent=fmtRango(dts);
+  const lugarEl=document.getElementById('calLugar');
+  if(lugar){lugarEl.style.display='';lugarEl.querySelector('span').textContent=lugar;}
+  else{lugarEl.style.display='none';}
+  document.getElementById('calGoogle').href=googleCalUrl(ev,dts);
+  const modal=document.getElementById('calModal');
+  modal.classList.add('show'); document.body.style.overflow='hidden';
+}
+function pecharModalCal(){
+  document.getElementById('calModal').classList.remove('show');
+  document.body.style.overflow='';
 }
 
 /* ================= COMPARTIR ================= */
@@ -640,8 +773,6 @@ function applyI18n(){
   document.documentElement.setAttribute('lang',LANG);
   document.querySelector('meta[property="og:locale"]').setAttribute('content',LANG==='gl'?'gl_ES':'es_ES');
   // landing
-  setText('badgeNoOficial',T('badge_no_oficial'));
-  setText('landH1a',T('land_h1a')); setText('landH1b',T('land_h1b'));
   setText('landDatas',T('land_datas'));
   setText('verPrograma',T('ver_programa'));
   setText('btnInstalar',T('instalar'));
@@ -649,16 +780,23 @@ function applyI18n(){
   // topbar
   setText('brand',T('brand')); setText('brandSub',T('brand_sub'));
   setAttr('langBtn','aria-label',T('aria_idioma')); setAttr('themeBtn','aria-label',T('aria_tema'));
+  setAttr('langBtnLand','aria-label',T('aria_idioma'));
   setAttr('homeBtn','aria-label',T('aria_inicio')); setAttr('topBtn','aria-label',T('aria_arriba'));
   setAttr('sel','aria-label',T('aria_seccion')); setAttr('clearBusca','aria-label',T('aria_limpar'));
-  document.getElementById('langBtn').textContent = LANG==='gl'?'ES':'GL';
+  // os botóns de idioma amosan a outra lingua á que se cambia
+  const outro = LANG==='gl'?'ES':'GL';
+  document.getElementById('langBtn').textContent = outro;
+  document.getElementById('langBtnLand').textContent = outro;
   document.getElementById('busca').setAttribute('placeholder',T('buscar_ph'));
   // footer
   setHtml('footTitulo',T('foot_titulo')); setHtml('footOficial',T('foot_oficial'));
   setHtml('footFirma',T('foot_firma')); setHtml('footCreditos',T('foot_creditos'));
-  // landing lang botóns: marcar activo
-  document.getElementById('langGl').style.opacity=LANG==='gl'?'1':'.55';
-  document.getElementById('langEs').style.opacity=LANG==='es'?'1':'.55';
+  // modal calendario
+  setText('calModalTit',T('cal_modal_tit'));
+  setText('calGoogleTxt',T('cal_google'));
+  setText('calDescargaTxt',T('cal_descarga'));
+  setText('calPie',T('cal_pie'));
+  setAttr('calClose','aria-label',T('aria_pechar'));
   buildSelect();
   render();
 }
@@ -678,10 +816,17 @@ function volverCartel(){landing.style.display='flex';requestAnimationFrame(()=>l
 document.getElementById('verPrograma').addEventListener('click',abrirPrograma);
 document.getElementById('homeBtn').addEventListener('click',volverCartel);
 
-document.getElementById('langGl').addEventListener('click',()=>setLang('gl'));
-document.getElementById('langEs').addEventListener('click',()=>setLang('es'));
-document.getElementById('langBtn').addEventListener('click',()=>setLang(LANG==='gl'?'es':'gl'));
+function toggleLang(){setLang(LANG==='gl'?'es':'gl');}
+document.getElementById('langBtn').addEventListener('click',toggleLang);
+document.getElementById('langBtnLand').addEventListener('click',toggleLang);
 document.getElementById('themeBtn').addEventListener('click',()=>{applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');});
+
+/* modal calendario */
+document.getElementById('calClose').addEventListener('click',pecharModalCal);
+document.getElementById('calModal').addEventListener('click',(e)=>{if(e.target.id==='calModal')pecharModalCal();});
+document.getElementById('calGoogle').addEventListener('click',()=>{toast(T('toast_cal'));setTimeout(pecharModalCal,300);});
+document.getElementById('calDescarga').addEventListener('click',()=>{if(calEvActual&&calDtsActual){descargarICSEvento(calEvActual,calDtsActual);pecharModalCal();}});
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')pecharModalCal();});
 
 sel.addEventListener('change',()=>{
   state.mode=sel.value;
@@ -693,7 +838,7 @@ clearBusca.addEventListener('click',()=>{busca.value='';state.q='';clearBusca.cl
 
 document.getElementById('contido').addEventListener('click',e=>{
   const fav=e.target.closest('[data-fav]'); if(fav){toggleFav(fav.dataset.fav);return;}
-  const cal=e.target.closest('[data-cal]'); if(cal){descargarICS(cal.dataset.cal);return;}
+  const cal=e.target.closest('[data-cal]'); if(cal){abrirModalCal(cal.dataset.cal);return;}
   const sh=e.target.closest('[data-share]'); if(sh){compartir(sh.dataset.share);return;}
 });
 
@@ -753,20 +898,37 @@ window.addEventListener('hashchange',aplicarHash);
 /* ================= REFRESCO EN DIRECTO ================= */
 setInterval(()=>{if(app.classList.contains('show'))render();},60000);
 
+/* ================= AVISO DE REDE ================= */
+let netT;
+function netBanner(msg,offline){
+  const b=document.getElementById('netBanner');
+  b.textContent=msg;
+  b.classList.toggle('offline',!!offline);
+  b.classList.add('show');
+  clearTimeout(netT);
+  if(!offline) netT=setTimeout(()=>b.classList.remove('show'),2600);
+}
+window.addEventListener('offline',()=>netBanner(T('net_offline'),true));
+window.addEventListener('online',()=>{netBanner(T('net_online'),false);});
+
 /* ================= INIT ================= */
 (async function init(){
-  // amosar un estado de carga mentres chega o JSON
   document.getElementById('contido').innerHTML='<div class="empty"><span class="big">🎆</span><p>'+(LANG==='es'?'Cargando programa…':'Cargando programa…')+'</p></div>';
-  await cargarEventos();
+  const ok=await cargarEventos();
   if(!ALL_EVENTS.length){
-    // erro ao cargar: avisar e ofrecer reintentar
     applyI18n();
-    document.getElementById('contido').innerHTML='<div class="empty"><span class="big">⚠️</span><h3>'+(LANG==='es'?'No se pudo cargar el programa':'Non se puido cargar o programa')+'</h3><p>'+(LANG==='es'?'Revisa tu conexión e inténtalo de nuevo.':'Revisa a túa conexión e téntao de novo.')+'</p></div>';
+    const h=LANG==='es'?'No se pudo cargar el programa':'Non se puido cargar o programa';
+    const p=LANG==='es'?'Revisa tu conexión e inténtalo de nuevo.':'Revisa a túa conexión e téntao de novo.';
+    const r=LANG==='es'?'Reintentar':'Tentar de novo';
+    document.getElementById('contido').innerHTML='<div class="empty"><span class="big">⚠️</span><h3>'+h+'</h3><p>'+p+'</p><button class="btn-programa" id="retryBtn" style="margin-top:18px">'+r+'</button></div>';
+    const rb=document.getElementById('retryBtn'); if(rb) rb.addEventListener('click',()=>location.reload());
     return;
   }
   applyI18n();
   aplicarHash();
+  // se arrancamos sen conexión pero hai datos (caché), avisamos discretamente
+  if(!navigator.onLine) netBanner(T('net_offline'),true);
 })();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a091d07dfce50cdb',t:'MTc4MTAyNTcwNA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
