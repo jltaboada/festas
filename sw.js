@@ -10,6 +10,7 @@ const CACHE = 'festas-ourense-' + VERSION;
 const ASSETS = [
   './',
   './index.html',
+  './eventos.json',
   './manifest.webmanifest',
   './img/cartel.jpg',
   './img/og.jpg',
@@ -60,6 +61,19 @@ self.addEventListener('fetch', (e) => {
         caches.open(CACHE).then((c) => c.put('./index.html', copy));
         return res;
       }).catch(() => caches.match('./index.html').then((r) => r || caches.match('./')))
+    );
+    return;
+  }
+
+  // eventos.json: REDE PRIMEIRO (para que os cambios de eventos cheguen axiña),
+  // con fallback á caché cando non hai conexión
+  if (url.pathname.endsWith('/eventos.json') || url.pathname.endsWith('eventos.json')) {
+    e.respondWith(
+      fetch(req).then((res) => {
+        const copy = res.clone();
+        caches.open(CACHE).then((c) => c.put('./eventos.json', copy));
+        return res;
+      }).catch(() => caches.match('./eventos.json'))
     );
     return;
   }

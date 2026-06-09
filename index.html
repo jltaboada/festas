@@ -333,7 +333,7 @@
 /* ================= I18N ================= */
 const I18N={
   gl:{
-    badge_no_oficial:'Programa non oficial',
+    badge_no_oficial:'App non oficial · Programa oficial',
     land_h1a:'Festas de', land_h1b:'Ourense 2026',
     land_datas:'🗓️ Do 17 ao 21 de xuño',
     ver_programa:'Ver programa →',
@@ -364,7 +364,7 @@ const I18N={
     cal_desc:'Festas de Ourense 2026 · Programa non oficial (jltaboada.com). Info oficial: ourense.gal'
   },
   es:{
-    badge_no_oficial:'Programa no oficial',
+    badge_no_oficial:'App no oficial · Programa oficial',
     land_h1a:'Fiestas de', land_h1b:'Ourense 2026',
     land_datas:'🗓️ Del 17 al 21 de junio',
     ver_programa:'Ver programa →',
@@ -425,70 +425,36 @@ const DIA_INFO={
   sab:{nome:{gl:'Sábado',es:'Sábado'},num:20},
   dom:{nome:{gl:'Domingo',es:'Domingo'},num:21}
 };
-/* lugares reutilizados */
-const L={
-  ponte:{gl:'Ponte Romana',es:'Puente Romano'},
-  ext:{gl:'Exterior Pavillón dos Remedios',es:'Exterior Pabellón dos Remedios'},
-  volei:{gl:'Campo Vólei Praia de Oira',es:'Campo Vóley Playa de Oira'},
-  cancha:{gl:'Cancha Central · Pavillón dos Remedios',es:'Cancha Central · Pabellón dos Remedios'},
-  arenal:{gl:'Praza de Concepción Arenal',es:'Plaza de Concepción Arenal'},
-  anexo:{gl:'Pavillón Anexo dos Remedios',es:'Pabellón Anexo dos Remedios'},
-  pistas:{gl:'Pistas exteriores · Pavillón dos Remedios',es:'Pistas exteriores · Pabellón dos Remedios'}
-};
+/* Os datos dos eventos cárganse desde eventos.json (máis fácil de editar).
+   ALL_EVENTS énchese en cargarEventos(). */
+let ALL_EVENTS=[];
 
-const PERMANENTES=[
-  {tipo:'permanente',titulo:'Mercado Medieval',icon:'🏰',
-   detalle:{gl:'<b>Do mércores 17 ao domingo 21.</b><br>Apertura: mércores 17 ás 17.00 h.<br>Horario: de 11.00 a 01.00 h (domingo ata as 22.00 h).',
-            es:'<b>Del miércoles 17 al domingo 21.</b><br>Apertura: miércoles 17 a las 17.00 h.<br>Horario: de 11.00 a 01.00 h (domingo hasta las 22.00 h).'},
-   lugar:{gl:'Contorna da Ponte Romana',es:'Alrededores del Puente Romano'}},
-  {tipo:'permanente',titulo:{gl:'Atraccións',es:'Atracciones'},icon:'🎡',
-   detalle:{gl:'<b>Do mércores 17 ao domingo 21.</b><br>Mér, xov e ven: de 19.00 a 02.00 h.<br>Sábado: de 17.00 a 02.00 h.<br>Domingo: de 17.00 a 23.00 h.',
-            es:'<b>Del miércoles 17 al domingo 21.</b><br>Mié, jue y vie: de 19.00 a 02.00 h.<br>Sábado: de 17.00 a 02.00 h.<br>Domingo: de 17.00 a 23.00 h.'},
-   lugar:{gl:'Parque Barbaña',es:'Parque Barbaña'}},
-  {tipo:'infantil',titulo:{gl:'Xincana inchables acuáticos',es:'Gincana hinchables acuáticos'},icon:'💦',
-   detalle:{gl:'<b>Do mércores 17 ao domingo 21.</b><br>De 17.00 a 20.00 h.<br>Sábado e domingo: de 11.30 a 13.00 e de 17.00 a 20.00 h.',
-            es:'<b>Del miércoles 17 al domingo 21.</b><br>De 17.00 a 20.00 h.<br>Sábado y domingo: de 11.30 a 13.00 y de 17.00 a 20.00 h.'},
-   lugar:{gl:'Parque da Ribeira de Canedo',es:'Parque de la Ribeira de Canedo'}}
-];
-const DIAS=[
-  {id:'mer',eventos:[
-    {tipo:'musica',titulo:'Orquestra Magma',hora:'21.00 – 22.30 h',lugar:L.ponte},
-    {tipo:'espectaculo',titulo:'Pregón: Rober Bodegas',hora:'22.30 h',lugar:L.ponte},
-    {tipo:'espectaculo',titulo:{gl:'Espectáculo de Drons',es:'Espectáculo de Drones'},hora:'23.00 h',lugar:L.ponte},
-    {tipo:'musica',titulo:'Orquestra Magma',hora:'23.20 – 01.00 h',lugar:L.ponte}
-  ]},
-  {id:'xov',eventos:[
-    {tipo:'deporte',titulo:{gl:'Portas abertas Vólei Praia (maiores de 15 anos)',es:'Puertas abiertas Vóley Playa (mayores de 15 años)'},hora:'18.30 – 20.00 h',lugar:L.volei},
-    {tipo:'musica',titulo:'M-Clan',hora:'23.00 – 01.00 h',lugar:L.ext},
-    {tipo:'musica',titulo:'A Gramola · Sesión DJ’s',hora:'01.30 – 03.30 h',lugar:L.ext}
-  ]},
-  {id:'ven',eventos:[
-    {tipo:'deporte',titulo:{gl:'Portas abertas Vólei Praia (6 a 14 anos)',es:'Puertas abiertas Vóley Playa (6 a 14 años)'},hora:'18.30 – 20.00 h',lugar:L.volei},
-    {tipo:'deporte',titulo:'2.º Máster de Ourense de Futbolín',hora:'19.00 h',lugar:L.cancha},
-    {tipo:'musica',titulo:'Miguel Ríos',hora:'23.00 – 01.00 h',lugar:L.ext},
-    {tipo:'musica',titulo:'América',hora:'01.00 – 03.30 h',lugar:L.arenal}
-  ]},
-  {id:'sab',eventos:[
-    {tipo:'deporte',titulo:'2.º Máster de Ourense de Futbolín',hora:'09.00 – 01.00 h',lugar:L.anexo},
-    {tipo:'espectaculo',titulo:'Breaking',hora:'17.00 – 22.00 h',lugar:L.pistas},
-    {tipo:'infantil',titulo:{gl:'Festa das Cores',es:'Fiesta de los Colores'},hora:'19.30 h',lugar:L.arenal},
-    {tipo:'infantil',titulo:'Cantajuego',hora:'20.30 h',lugar:L.arenal},
-    {tipo:'musica',titulo:'Dirty Suc',hora:'22.30 h',lugar:L.ext},
-    {tipo:'musica',titulo:'Hard Gz',hora:'23.45 h',lugar:L.ext},
-    {tipo:'musica',titulo:'Conductores Suicidas · Tributo a Sabina',hora:'00.00 h',lugar:L.arenal},
-    {tipo:'musica',titulo:'A Gramola · Sesión DJ’s',hora:'01.30 h',lugar:L.ext}
-  ]},
-  {id:'dom',eventos:[
-    {tipo:'musica',titulo:'Orquestra Função Públika',hora:'21.30 – 23.50 h',lugar:L.ponte},
-    {tipo:'espectaculo',titulo:{gl:'Fogos Artificiais',es:'Fuegos Artificiales'},hora:'00.00 h',lugar:L.ponte}
-  ]}
-];
+function construirEventos(data){
+  const lista=[];
+  (data.permanentes||[]).forEach((e,i)=>lista.push(Object.assign({},e,{
+    id:'perm-'+i, diaId:'permanente', diaNome:null, diaNum:'', baseYmd:null
+  })));
+  (data.dias||[]).forEach(d=>{
+    const info=DIA_INFO[d.id]||{nome:d.id,num:''};
+    (d.eventos||[]).forEach((e,i)=>lista.push(Object.assign({},e,{
+      id:d.id+'-'+i, diaId:d.id, diaNome:info.nome, diaNum:info.num, baseYmd:DIA_DATE[d.id]||null
+    })));
+  });
+  return lista;
+}
 
-const ALL_EVENTS=[];
-PERMANENTES.forEach((e,i)=>ALL_EVENTS.push({...e,id:'perm-'+i,diaId:'permanente',diaNome:null,diaNum:'',baseYmd:null}));
-DIAS.forEach(d=>d.eventos.forEach((e,i)=>ALL_EVENTS.push({
-  ...e,id:d.id+'-'+i,diaId:d.id,diaNome:DIA_INFO[d.id].nome,diaNum:DIA_INFO[d.id].num,baseYmd:DIA_DATE[d.id]
-})));
+async function cargarEventos(){
+  try{
+    // cache-busting suave: muda co despregamento (a app actualízase soa co SW)
+    const res=await fetch('eventos.json',{cache:'no-cache'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    ALL_EVENTS=construirEventos(data);
+  }catch(err){
+    console.error('Non se puido cargar eventos.json:',err);
+    ALL_EVENTS=[];
+  }
+}
 
 /* ================= ESTADO ================= */
 let FAVS=new Set();
@@ -788,8 +754,19 @@ window.addEventListener('hashchange',aplicarHash);
 setInterval(()=>{if(app.classList.contains('show'))render();},60000);
 
 /* ================= INIT ================= */
-applyI18n();
-aplicarHash();
+(async function init(){
+  // amosar un estado de carga mentres chega o JSON
+  document.getElementById('contido').innerHTML='<div class="empty"><span class="big">🎆</span><p>'+(LANG==='es'?'Cargando programa…':'Cargando programa…')+'</p></div>';
+  await cargarEventos();
+  if(!ALL_EVENTS.length){
+    // erro ao cargar: avisar e ofrecer reintentar
+    applyI18n();
+    document.getElementById('contido').innerHTML='<div class="empty"><span class="big">⚠️</span><h3>'+(LANG==='es'?'No se pudo cargar el programa':'Non se puido cargar o programa')+'</h3><p>'+(LANG==='es'?'Revisa tu conexión e inténtalo de nuevo.':'Revisa a túa conexión e téntao de novo.')+'</p></div>';
+    return;
+  }
+  applyI18n();
+  aplicarHash();
+})();
 </script>
 </body>
 </html>

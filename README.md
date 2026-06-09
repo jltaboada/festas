@@ -40,6 +40,7 @@
 ```
 .
 ├── index.html              # app completa (HTML + CSS + JS)
+├── eventos.json            # ← TODOS los datos del programa (edítalo aquí)
 ├── manifest.webmanifest    # metadatos de la PWA
 ├── sw.js                   # service worker (offline / caché)
 ├── .nojekyll
@@ -54,15 +55,48 @@
     ├── fireworks.png / fireworks2.png  # decoración (del PDF)
 ```
 
-## ✏️ Editar el programa
+## ✏️ Editar el programa (¡ahora muy fácil!)
 
-Los datos están en el bloque `<script>` de `index.html` (arrays `PERMANENTES` y `DIAS`).
-**Importante:** cada vez que cambies cualquier archivo, edita la constante **`VERSION`** al
-principio de `sw.js` (p. ej. `'2026-06-09-3'` → `'2026-06-09-4'`). Eso basta para que la app
-detecte la actualización, la descargue y se recargue sola en los dispositivos de los usuarios.
+**Todos los eventos están en `eventos.json`.** No hace falta tocar `index.html`. Para cambiar,
+añadir o quitar un evento, edita ese archivo y súbelo a GitHub.
 
-> _(Nota técnica: los textos están traducidos en el objeto `I18N` y los datos bilingües del
-> programa usan `{gl:'…', es:'…'}` dentro de los arrays.)_
+### Cómo es cada evento
+
+```json
+{
+  "tipo": "musica",
+  "titulo": "Miguel Ríos",
+  "hora": "23.00 – 01.00 h",
+  "lugar": { "gl": "Exterior Pavillón dos Remedios", "es": "Exterior Pabellón dos Remedios" }
+}
+```
+
+- **`tipo`** (obligatorio): uno de `musica`, `espectaculo`, `deporte`, `infantil`, `permanente`.
+  Define el color y el icono de la tarjeta.
+- **`titulo`** (obligatorio): texto. Puede ser simple (`"Miguel Ríos"`) o bilingüe
+  (`{ "gl": "...", "es": "..." }`). Usa la forma bilingüe solo si el texto cambia entre idiomas.
+- **`hora`**: p. ej. `"21.00 h"` o `"21.00 – 22.30 h"`. De aquí se calcula el botón de calendario
+  y el estado *"en directo"*. Si un evento no tiene hora, déjalo sin este campo.
+- **`lugar`**: texto simple o bilingüe. Se usa para el chip 📍 y para Google Maps.
+- **`icon`** (opcional): un emoji para la tarjeta (p. ej. `"🎡"`). Si no se pone, se usa el del tipo.
+- **`detalle`** (opcional): texto largo, admite HTML (`<b>`, `<br>`). Útil para las permanentes.
+
+### Dónde van
+
+- Las actividades de cada día van en `dias` → el día con su `id` (`mer`, `xov`, `ven`, `sab`, `dom`)
+  → array `eventos`. **El orden del array es el orden en que se muestran.**
+- Las actividades de toda la fiesta van en el array `permanentes`.
+
+### Consejos
+
+- Respeta las **comillas** y las **comas** del JSON. Si algo falla, pega el archivo en
+  [jsonlint.com](https://jsonlint.com) para validarlo antes de subir.
+- Tras editar `eventos.json`, los cambios llegan **rápido** (se carga "red primero").
+  Aun así, **lo recomendable es subir también `VERSION` en `sw.js`** (p. ej. `'2026-06-09-4'` →
+  `'2026-06-09-5'`) para forzar la actualización completa en las apps ya instaladas.
+
+> _(Nota técnica: los textos de la interfaz están en el objeto `I18N` dentro de `index.html`.
+> Los datos del programa viven en `eventos.json`.)_
 
 ---
 Imágenes e iconos derivados del PDF del programa oficial. Datos sujetos a posibles cambios.
